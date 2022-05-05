@@ -1,2 +1,4 @@
-package com.example.phim88.model;public class ModelPopular {
+package com.example.phim88.model;
+
+public class ModelPopular {
 }
