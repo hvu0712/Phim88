@@ -3,7 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_main.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/ic_baseline_dehaze_24.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/main_shape.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.1035" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1157548125633232" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/app_bar.xml" value="0.1157548125633232" />
+        <entry key="app/src/main/res/layout/base_fragment.xml" value="0.1157548125633232" />
+        <entry key="app/src/main/res/layout/base_lv_item.xml" value="0.1157548125633232" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/drawer_view.xml" value="0.1157548125633232" />
+        <entry key="app/src/main/res/layout/lv_item.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.20136054421768707" />
+        <entry key="app/src/main/res/menu/drawer_view.xml" value="0.13703703703703704" />
+        <entry key="app/src/main/res/menu/main_activity2.xml" value="0.13703703703703704" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.13703703703703704" />
       </map>
     </option>
   </component>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="genresViewModel"
+            type="com.example.phim88.viewModels.GenresViewModel.Content" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6acafd"
+            android:textStyle="bold"
+            android:text="@string/app_name"
+            android:textSize="16sp"
+            android:fontFamily="monospace"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</layout>
