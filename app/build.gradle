@@ -76,4 +76,10 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+
+    //thu vien circleindicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    // thu vien glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
 }
