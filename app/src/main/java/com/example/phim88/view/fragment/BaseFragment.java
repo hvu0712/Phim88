@@ -1,4 +1,4 @@
-package com.example.phim88.views;
+package com.example.phim88.view.fragment;
 
 import android.os.Bundle;
 

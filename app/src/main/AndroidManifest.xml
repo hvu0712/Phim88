@@ -13,11 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Phim88">
         <activity
-            android:name=".views.SplashScreen"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".views.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

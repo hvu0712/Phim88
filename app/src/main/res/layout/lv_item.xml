@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="genresViewModel"
-            type="com.example.phim88.viewModels.GenresViewModel.Content" />
+            type="com.example.phim88.viewmodel.GenresViewModel.Content" />
     </data>
 
     <LinearLayout

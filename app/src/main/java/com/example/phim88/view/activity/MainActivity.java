@@ -1,4 +1,4 @@
-package com.example.phim88.views;
+package com.example.phim88.view.activity;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,31 +14,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
-import com.example.phim88.adapter.ListviewAdapter;
-import com.example.phim88.api.ApiGenre;
+import com.example.phim88.control.rest.Repository;
 import com.example.phim88.model.ListGenre;
-import com.example.phim88.viewModels.GenresViewModel;
+import com.example.phim88.view.adapter.GenresAdapter;
+import com.example.phim88.viewmodel.GenresViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MainActivity";
+    private List<ListGenre> mList;
     DrawerLayout drawerLayout;
-    ListView listView;
     Toolbar toolbar;
-    List<ListGenre> mList;
-    ListviewAdapter listviewAdapter;
-
+    RecyclerView recyclerView;
+    GenresAdapter genresAdapter;
+    Repository repository = new Repository();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolBar);
-        listView = findViewById(R.id.lv);
+        recyclerView = findViewById(R.id.rclv);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -55,37 +52,31 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_dehaze_24);
         getSupportActionBar().setHomeAsUpIndicator(drawable);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
-        listView.setDividerHeight(0);
-        GenresViewModel genresViewModel = new GenresViewModel();
-        GenresViewModel.Content content = genresViewModel.new Content();
-        callApi();
+
+        loadGenres();
     }
 
-    private void callApi() {
+    private void loadGenres() {
         mList = new ArrayList<>();
-
-        ApiGenre.API_GENRE.genre("c5bc51188f077d87779efbc157e53c08",
-                "en-US").enqueue(new Callback<ListGenre>() {
+        genresAdapter = new GenresAdapter(mList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        repository.getGenresListObserver().observe(this, new Observer<ListGenre>() {
             @Override
-            public void onResponse(Call<ListGenre> call, Response<ListGenre> response) {
-                ListGenre genres = response.body();
-
-                if (genres.getGenres() != null && genres.getGenres().size() > 0) {
-                    for (ListGenre.Content content : genres.getGenres()) {
-                        mList.add(genres);
-                        listviewAdapter = new ListviewAdapter(mList);
-                        listView.setAdapter(listviewAdapter);
+            public void onChanged(ListGenre listGenre) {
+                if (listGenre.getGenres() != null && listGenre.getGenres().size() > 0) {
+                    for (ListGenre.Content content : listGenre.getGenres()) {
+                        mList.add(listGenre);
+                        genresAdapter = new GenresAdapter(mList);
+                        recyclerView.setAdapter(genresAdapter);
                         Log.d("TEST==", "id== " + content.getId() + "====" + content.getName());
                     }
                 }
-                Log.e(TAG, "onResponse: " + response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ListGenre> call, Throwable t) {
-
+                Log.e(TAG, "onChanged: " + listGenre);
             }
         });
+        repository.callApi();
+
     }
 
     @Override

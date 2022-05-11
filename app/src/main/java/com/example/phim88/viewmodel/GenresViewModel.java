@@ -1,25 +1,22 @@
-package com.example.phim88.viewModels;
+package com.example.phim88.viewmodel;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.phim88.BR;
-import com.example.phim88.api.ApiGenre;
+import com.example.phim88.control.api.ApiGenre;
+import com.example.phim88.control.rest.request.MyRequest;
 import com.example.phim88.model.ListGenre;
 
-import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class GenresViewModel extends BaseObservable {
-    List<ListGenre.Content> genres;
-    private ApiGenre apiGenre;
+public class GenresViewModel extends ViewModel {
+    private static final String TAG = "GenresViewModel";
 
-    public List<ListGenre.Content> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<ListGenre.Content> genres) {
-        this.genres = genres;
-    }
 
     public class Content extends BaseObservable {
         private int id;

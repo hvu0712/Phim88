@@ -3,7 +3,7 @@ package com.example.phim88.model;
 import java.util.List;
 
 public class ListGenre {
-    List<Content> genres;
+    private List<Content> genres;
 
     public void setGenres(List<Content> genres) {
         this.genres = genres;

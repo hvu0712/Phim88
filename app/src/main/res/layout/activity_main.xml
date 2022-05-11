@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:id="@+id/nav_view"
         tools:openDrawer="start"
-        tools:context=".views.MainActivity">
+        tools:context=".view.activity.MainActivity">
 
 
         <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
@@ -25,7 +25,7 @@
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#6acafd" />
+                android:background="@color/actionBarColor" />
         </FrameLayout>
 
         <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
@@ -35,14 +35,14 @@
             android:layout_gravity="end">
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ListView
-                    android:id="@+id/lv"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rclv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:choiceMode="singleChoice" />
+                    android:layout_height="match_parent"/>
             </LinearLayout>
         </com.google.android.material.navigation.NavigationView>
 
