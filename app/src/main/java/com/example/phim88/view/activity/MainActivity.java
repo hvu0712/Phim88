@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,12 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
-import com.example.phim88.control.rest.Repository;
-import com.example.phim88.model.ListGenre;
+import com.example.phim88.databinding.ActivityMainBinding;
 import com.example.phim88.view.adapter.GenresAdapter;
 import com.example.phim88.viewmodel.GenresViewModel;
 
@@ -30,53 +31,36 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "MainActivity";
-    private List<ListGenre> mList;
-    DrawerLayout drawerLayout;
-    Toolbar toolbar;
-    RecyclerView recyclerView;
-    GenresAdapter genresAdapter;
-    Repository repository = new Repository();
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private ActivityMainBinding binding;
+    private GenresViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        drawerLayout = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolBar);
-        recyclerView = findViewById(R.id.rclv);
+        LayoutInflater inflater = getLayoutInflater();
+        binding = ActivityMainBinding.inflate(inflater, null, false);
+        setContentView(binding.getRoot());
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolBar);
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_dehaze_24);
         getSupportActionBar().setHomeAsUpIndicator(drawable);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
 
-        loadGenres();
-    }
+        GenresAdapter adapter = new GenresAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        binding.rclv.setLayoutManager(layoutManager);
+        binding.rclv.setAdapter(adapter);
 
-    private void loadGenres() {
-        mList = new ArrayList<>();
-        genresAdapter = new GenresAdapter(mList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        repository.getGenresListObserver().observe(this, new Observer<ListGenre>() {
-            @Override
-            public void onChanged(ListGenre listGenre) {
-                if (listGenre.getGenres() != null && listGenre.getGenres().size() > 0) {
-                    for (ListGenre.Content content : listGenre.getGenres()) {
-                        mList.add(listGenre);
-                        genresAdapter = new GenresAdapter(mList);
-                        recyclerView.setAdapter(genresAdapter);
-                        Log.d("TEST==", "id== " + content.getId() + "====" + content.getName());
-                    }
-                }
-                Log.e(TAG, "onChanged: " + listGenre);
-            }
+        viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
+        viewModel.getGenres().observe(this, genres -> {
+            adapter.setData(genres);
+            adapter.notifyDataSetChanged();
         });
-        repository.callApi();
-
+        viewModel.requestGenres();
     }
 
     @Override
@@ -91,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 break;
             case R.id.menu_genres:
-                drawerLayout.openDrawer(GravityCompat.END);
+                binding.navView.openDrawer(GravityCompat.END);
                 break;
             case R.id.menu_search:
                 break;

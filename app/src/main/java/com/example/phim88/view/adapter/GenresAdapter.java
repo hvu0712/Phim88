@@ -1,5 +1,6 @@
 package com.example.phim88.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,50 +10,59 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
-import com.example.phim88.model.ListGenre;
+import com.example.phim88.databinding.LvItemBinding;
+import com.example.phim88.model.genre.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder> {
 
-    private List<ListGenre> mList;
+    private List<Genre> data;
 
-    public GenresAdapter(List<ListGenre> mList) {
-        this.mList = mList;
+    public GenresAdapter() {
+        data = new ArrayList<>();
+    }
+
+    public void setData(List<Genre> data) {
+        if (data == null) return;
+        this.data.clear();
+        this.data.addAll(data);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lv_item, parent, false);
-        return new ViewHolder(view);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        LvItemBinding binding = LvItemBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListGenre listGenre = mList.get(position);
-        if (listGenre == null){
+        Genre item = data.get(position);
+        if (item == null){
             return;
         }
-        holder.tv_item.setText(listGenre.getGenres().get(position).getName());
-
+        holder.binding.tvItem.setText(item.getName());
     }
 
     @Override
     public int getItemCount() {
-        if (mList != null){
-            return mList.size();
+        if (data != null){
+            return data.size();
         }
         return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_item;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public LvItemBinding binding;
 
-            tv_item = itemView.findViewById(R.id.tv_item);
+        public ViewHolder(LvItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }
