@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rcvHome= findViewById(R.id.rcv_home);
+//        rcvHome= findViewById(R.id.rcv_home);
         categoryAdapter = new CategoryAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);

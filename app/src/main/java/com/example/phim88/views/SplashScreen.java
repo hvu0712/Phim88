@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.phim88.R;
+import com.example.phim88.view.activity.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -55,7 +56,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this,MainActivity.class);
+                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

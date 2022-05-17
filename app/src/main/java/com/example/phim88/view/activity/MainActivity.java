@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
     private ValueAnimator animator;
     private ActivityMainBinding binding;
     private GenresViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +92,8 @@ public class MainActivity extends BaseActivity {
                 binding.navView.openDrawer(GravityCompat.END);
                 break;
             case R.id.menu_search:
-                Fragment fragment = new SearchFragment();
+                SearchFragment fragment = new SearchFragment();
+                fragment.setCallback(() -> onBackPressed());
                 initFragment(R.id.fragment_container, fragment);
                 break;
             case R.id.menu_darkMode:
@@ -100,12 +102,12 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void dropAnim(){
+    private void dropAnim() {
         viewHeight = binding.fragmentMain.getMeasuredHeight();
-        if (height == 0 || height < viewHeight){
+        if (height == 0 || height < viewHeight) {
             height = binding.fragmentMain.getMeasuredHeight();
         }
-        if (height > viewHeight){
+        if (height > viewHeight) {
             animator = ValueAnimator.ofInt(viewHeight, height);
         } else {
             animator = ValueAnimator.ofInt(height, viewHeight - 800);

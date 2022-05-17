@@ -25,9 +25,14 @@ import com.example.phim88.view.activity.BaseActivity;
 import com.example.phim88.view.activity.MainActivity;
 
 public class SearchFragment extends BaseFragment{
-
-    FragmentSearchBinding binding;
     private static final String TAG = "SearchFragment";
+
+    private FragmentSearchBinding binding;
+    private Callback callback;
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
 
     @Nullable
     @Override
@@ -39,11 +44,16 @@ public class SearchFragment extends BaseFragment{
         binding.searchToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), MainActivity.class);
+//                startActivity(intent);
+                if(callback != null) callback.back();
             }
         });
 
         return binding.getRoot();
+    }
+
+    public interface Callback {
+        void back();
     }
 }
