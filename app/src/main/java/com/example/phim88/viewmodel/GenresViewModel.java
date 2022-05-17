@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenresViewModel extends BaseViewModel {
+
     private static final String TAG = GenresViewModel.class.getSimpleName();
 
     private MutableLiveData<List<Genre>> genres;

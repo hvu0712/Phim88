@@ -29,6 +29,7 @@ public class Repository {
                 .build();
 
         genresApi = requestTheMovieDb.create(GenresApi.class);
+
     }
 
     public void callApi(RequestCallback callback){
