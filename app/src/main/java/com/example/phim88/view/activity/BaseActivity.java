@@ -21,8 +21,9 @@ public class BaseActivity extends AppCompatActivity {
 
         gson = new Gson();
     }
+
     @SuppressLint("ResourceType")
-    public void initFragment(int id, Fragment fragment){
+    public void initFragment(int id, Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 

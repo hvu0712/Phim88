@@ -1,12 +1,10 @@
 package com.example.phim88.view.activity;
 
 import android.animation.ValueAnimator;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,27 +12,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
 import com.example.phim88.databinding.ActivityMainBinding;
-import com.example.phim88.databinding.FragmentMainBinding;
 import com.example.phim88.view.adapter.GenresAdapter;
 import com.example.phim88.view.fragment.SearchFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -45,6 +31,7 @@ public class MainActivity extends BaseActivity {
     private ValueAnimator animator;
     private ActivityMainBinding binding;
     private GenresViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +78,8 @@ public class MainActivity extends BaseActivity {
                 binding.navView.openDrawer(GravityCompat.END);
                 break;
             case R.id.menu_search:
-                Fragment fragment = new SearchFragment();
+                SearchFragment fragment = new SearchFragment();
+                fragment.setCallBack(() -> onBackPressed());
                 initFragment(R.id.fragment_container, fragment);
                 break;
             case R.id.menu_darkMode:
@@ -100,12 +88,12 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void dropAnim(){
+    private void dropAnim() {
         viewHeight = binding.fragmentMain.getMeasuredHeight();
-        if (height == 0 || height < viewHeight){
+        if (height == 0 || height < viewHeight) {
             height = binding.fragmentMain.getMeasuredHeight();
         }
-        if (height > viewHeight){
+        if (height > viewHeight) {
             animator = ValueAnimator.ofInt(viewHeight, height);
         } else {
             animator = ValueAnimator.ofInt(height, viewHeight - 800);

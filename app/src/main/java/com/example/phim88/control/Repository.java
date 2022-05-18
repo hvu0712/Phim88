@@ -1,7 +1,5 @@
 package com.example.phim88.control;
 
-import androidx.startup.AppInitializer;
-
 import com.example.phim88.control.api.GenresApi;
 import com.example.phim88.model.genre.GenreResponse;
 import com.example.phim88.util.Const;
@@ -15,11 +13,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
-    private GenresApi genresApi;
+    private final GenresApi genresApi;
 
-    private Retrofit requestTheMovieDb;
+    private final Retrofit requestTheMovieDb;
 
-    public Repository(){
+    public Repository() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
@@ -32,7 +30,7 @@ public class Repository {
 
     }
 
-    public void callApi(RequestCallback callback){
+    public void callApi(RequestCallback callback) {
         if (callback == null)
             return;
 
@@ -50,7 +48,7 @@ public class Repository {
         });
     }
 
-    public interface RequestCallback{
+    public interface RequestCallback {
         void success(Object object);
 
         void fail(String msg);

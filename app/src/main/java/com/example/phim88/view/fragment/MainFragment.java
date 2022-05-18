@@ -20,7 +20,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main,container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
         return binding.getRoot();
     }
 }
