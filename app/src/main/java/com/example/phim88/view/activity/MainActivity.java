@@ -37,14 +37,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-
-
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private ActivityMainBinding binding;
+    private GenresViewModel viewModel;
+
     private int height = 0;
     private int viewHeight;
     private ValueAnimator animator;
-    private ActivityMainBinding binding;
-    private GenresViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,4 +121,7 @@ public class MainActivity extends BaseActivity {
         animator.setDuration(500);
         animator.start();
     }
+
+
+
 }

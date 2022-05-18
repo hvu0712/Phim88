@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 //        rcvHome= findViewById(R.id.rcv_home);
         categoryAdapter = new CategoryAdapter(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvHome.setLayoutManager(linearLayoutManager);
 
 
@@ -44,21 +44,21 @@ public class MainActivity extends AppCompatActivity {
 
         List<Movie> listMovie = new ArrayList<>();
 
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 1 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 2 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 3 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 4 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 5 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 6 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 6 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 7 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 8 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 9 "));
-        listMovie.add(new Movie(R.drawable.demo1 , "Phim Hanh Dong 10 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 1 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 2 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 3 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 4 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 5 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 6 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 6 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 7 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 8 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 9 "));
+        listMovie.add(new Movie(R.drawable.demo1, "Phim Hanh Dong 10 "));
 
-        listCategory.add(new Category("Phim hanh dong 1" , listMovie));
-        listCategory.add(new Category("Phim hanh dong 2" , listMovie));
-        listCategory.add(new Category("Phim hanh dong 3     " , listMovie));
+        listCategory.add(new Category("Phim hanh dong 1", listMovie));
+        listCategory.add(new Category("Phim hanh dong 2", listMovie));
+        listCategory.add(new Category("Phim hanh dong 3     ", listMovie));
 
         return listCategory;
     }

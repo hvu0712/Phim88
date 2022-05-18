@@ -1,6 +1,4 @@
-package com.example.phim88.views;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.phim88.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +10,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.phim88.R;
-import com.example.phim88.view.activity.MainActivity;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends BaseActivity {
+    private static final int FLASH_TIME_OUT = 3000;
 
-    private static int FLASH_TIME_OUT = 3000;
+    private View first , second ,third , fourth , fifth,sixth;
+    private TextView h , slogan;
 
-    View first , second ,third , fourth , fifth,sixth;
-    TextView h , slogan;
-
-    Animation topAnimation , middleAnimation ,bottonAnimation ;
+    private Animation topAnimation , middleAnimation ,bottonAnimation ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
