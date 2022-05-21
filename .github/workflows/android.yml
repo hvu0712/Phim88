@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ VuPham ]
+    branches: [ Huy ]
   pull_request:
-    branches: [ VuPham ]
+    branches: [ Huy ]
 
 jobs:
   build:
