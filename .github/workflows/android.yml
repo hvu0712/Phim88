@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches: [ Huy ]
+    branches: [ VuPham ]
   pull_request:
     branches: [ Huy ]
 
