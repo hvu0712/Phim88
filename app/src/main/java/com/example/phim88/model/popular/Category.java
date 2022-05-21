@@ -1,13 +1,15 @@
-package com.example.phim88.model;
+package com.example.phim88.model.popular;
+
+import com.example.phim88.model.popular.Popular;
 
 import java.util.List;
 
 public class Category {
 
     private String nameCategory;
-    private List<Movie> movies ;
+    private List<Popular> movies ;
 
-    public Category(String nameCategory, List<Movie> movies) {
+    public Category(String nameCategory, List<Popular> movies) {
         this.nameCategory = nameCategory;
         this.movies = movies;
     }
@@ -20,11 +22,11 @@ public class Category {
         this.nameCategory = nameCategory;
     }
 
-    public List<Movie> getMovies() {
+    public List<Popular> getMovies() {
         return movies;
     }
 
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(List<Popular> movies) {
         this.movies = movies;
     }
 }

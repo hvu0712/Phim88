@@ -1,32 +1,37 @@
-package com.example.phim88.Adapter;
+package com.example.phim88.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.phim88.R;
 import com.example.phim88.databinding.ItemMovieBinding;
-import com.example.phim88.databinding.LvItemBinding;
-import com.example.phim88.model.Movie;
+import com.example.phim88.model.popular.Popular;
 import com.example.phim88.view.fragment.DetailFragment;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> mListMovie;
+    private List<Popular> mListMovie;
 
 
-    public void setData(List<Movie> list) {
+    private Context context;
+
+    public MovieAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<Popular> list) {
         this.mListMovie = list;
         notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -41,22 +46,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Movie movie = mListMovie.get(position);
-        if (movie == null) {
+        Popular popular = mListMovie.get(position);
+        if (popular == null) {
             return;
         }
-
-        holder.binding.imgItem.setImageResource(movie.getImgMovie());
-        holder.binding.tvName.setText(movie.getNameMovie());
+        String img_base = "https://image.tmdb.org/t/p/w500/";
+        holder.binding.tvName.setText(popular.getTitle());
+        Glide.with(context)
+                .load(img_base + popular.getPosterPath())
+                .into(holder.binding.imgItem);
         holder.binding.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 DetailFragment detailFragment = new DetailFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.main,detailFragment).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.main, detailFragment).addToBackStack(null).commit();
             }
         });
-
     }
 
     @Override
@@ -75,7 +81,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public MovieViewHolder(@NonNull ItemMovieBinding binding) {
 
             super(binding.getRoot());
-          this.binding = binding;
+            this.binding = binding;
 
         }
     }

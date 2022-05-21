@@ -1,9 +1,11 @@
 package com.example.phim88.control;
 
-import androidx.startup.AppInitializer;
-
 import com.example.phim88.control.api.GenresApi;
+import com.example.phim88.control.api.PopularApi;
+import com.example.phim88.control.api.UpcomingApi;
 import com.example.phim88.model.genre.GenreResponse;
+import com.example.phim88.model.popular.PopularResponse;
+import com.example.phim88.model.upcoming.UpcomingResponse;
 import com.example.phim88.util.Const;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,6 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
     private GenresApi genresApi;
+    private PopularApi popularApi;
+    private UpcomingApi upcomingApi;
 
     private Retrofit requestTheMovieDb;
 
@@ -29,13 +33,11 @@ public class Repository {
                 .build();
 
         genresApi = requestTheMovieDb.create(GenresApi.class);
+        popularApi = requestTheMovieDb.create(PopularApi.class);
 
     }
 
     public void callApi(RequestCallback callback){
-        if (callback == null)
-            return;
-
         Call<GenreResponse> call = genresApi.getGenres(Const.info.key, Const.info.language);
         call.enqueue(new Callback<GenreResponse>() {
             @Override
@@ -45,6 +47,36 @@ public class Repository {
 
             @Override
             public void onFailure(Call<GenreResponse> call, Throwable t) {
+                callback.fail(t.getMessage());
+            }
+        });
+    }
+
+    public void callPopular(RequestCallback callback){
+        Call<PopularResponse> call = popularApi.getPopular(Const.info.key, Const.info.language, 1);
+        call.enqueue(new Callback<PopularResponse>() {
+            @Override
+            public void onResponse(Call<PopularResponse> call, Response<PopularResponse> response) {
+                callback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PopularResponse> call, Throwable t) {
+                callback.fail(t.getMessage());
+            }
+        });
+    }
+
+    public void callUpcoming(RequestCallback callback){
+        Call<UpcomingResponse> call = upcomingApi.getUpComing(Const.info.key, Const.info.language, 1);
+        call.enqueue(new Callback<UpcomingResponse>() {
+            @Override
+            public void onResponse(Call<UpcomingResponse> call, Response<UpcomingResponse> response) {
+                callback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<UpcomingResponse> call, Throwable t) {
                 callback.fail(t.getMessage());
             }
         });
