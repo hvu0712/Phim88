@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentMainBinding;
-import com.example.phim88.model.popular.Category;
+import com.example.phim88.model.Category;
 import com.example.phim88.model.popular.Popular;
+import com.example.phim88.model.upcoming.Upcoming;
 import com.example.phim88.view.adapter.CategoryAdapter;
 import com.example.phim88.viewmodel.PopularViewModel;
+import com.example.phim88.viewmodel.UpcomingViewModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MainFragment extends BaseFragment {
@@ -29,8 +32,12 @@ public class MainFragment extends BaseFragment {
     private FragmentMainBinding binding;
     private CategoryAdapter categoryAdapter;
     private PopularViewModel popularViewModel;
-    private List<Category> listCategory;
-    private List<Popular> movieList;
+    private UpcomingViewModel upcomingViewModel;
+    private List<Category> listCategory = new ArrayList<>();
+    private List<Popular> movieListPopular = new ArrayList<>();
+    private List<Upcoming> movieListUpcoming = new ArrayList<>();
+    private Category category;
+    private Category upcoming;
     private LinearLayoutManager linearLayoutManager;
 
     @Nullable
@@ -43,23 +50,69 @@ public class MainFragment extends BaseFragment {
 
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
 
-        movieList = new ArrayList<>();
-        listCategory = new ArrayList<>();
+        fetchPopular();
+
+        fetchUpcoming();
+
+        return binding.getRoot();
+    }
+
+    public void fetchPopular(){
+        // get value popular
+
         popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
         popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
             if (populars != null && populars.size() > 0){
                 for (Popular popular : populars){
-                    movieList.add(new Popular(popular.getPosterPath(), popular.getTitle()));
+                    movieListPopular.add(new Popular(popular.getPosterPath(), popular.getTitle()));
                 }
-                listCategory.add(new Category("Popular", movieList));
-                listCategory.add(new Category("UpcomingApi", movieList));
-                Log.e(TAG, "getItemCount: "+categoryAdapter.getItemCount());
+                Log.e(TAG, "fetchPopular: "+populars);
+                Log.e(TAG, "movieListPopular: "+movieListPopular.size() );
+                listCategory.add(category);
             }
+            category = new Category(){
+                {
+                    setMovies(movieListPopular);
+                    setNameCategory("Popular");
+                }
+            };
+            categoryAdapter.setData(listCategory);
+            binding.rcvCategory.setAdapter(categoryAdapter);
+            binding.rcvCategory.setLayoutManager(linearLayoutManager);
+
+        });
+        popularViewModel.requestPopular();
+    }
+
+    public void getPopulars(){
+        popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
+        popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
+
+        });
+        popularViewModel.requestPopular();
+    }
+
+    public void fetchUpcoming(){
+        // get value upcoming
+
+        upcomingViewModel = new ViewModelProvider(this).get(UpcomingViewModel.class);
+        upcomingViewModel.getListUpcoming().observe(getViewLifecycleOwner(), upcomings -> {
+            if (upcomings != null && upcomings.size() > 0){
+                for (Upcoming upcoming : upcomings){
+                    movieListUpcoming.add(new Upcoming(upcoming.getPosterPath(), upcoming.getTitle()));
+                }
+                listCategory.add(upcoming);
+            }
+            upcoming = new Category(){
+                {
+                    setNameCategory("Upcoming");
+                    setUpcomings(movieListUpcoming);
+                }
+            };
             categoryAdapter.setData(listCategory);
             binding.rcvCategory.setAdapter(categoryAdapter);
             binding.rcvCategory.setLayoutManager(linearLayoutManager);
         });
-        popularViewModel.requestPopular();
-        return binding.getRoot();
+        upcomingViewModel.RequestUpcoming();
     }
 }

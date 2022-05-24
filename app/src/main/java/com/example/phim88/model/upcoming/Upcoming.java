@@ -44,10 +44,15 @@ public class Upcoming {
     public Boolean video;
     @SerializedName("vote_average")
     @Expose
-    public Integer voteAverage;
+    public Float voteAverage;
     @SerializedName("vote_count")
     @Expose
     public Integer voteCount;
+
+    public Upcoming(String posterPath, String title) {
+        this.posterPath = posterPath;
+        this.title = title;
+    }
 
     public Boolean getAdult() {
         return adult;
@@ -145,11 +150,11 @@ public class Upcoming {
         this.video = video;
     }
 
-    public Integer getVoteAverage() {
+    public Float getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(Integer voteAverage) {
+    public void setVoteAverage(Float voteAverage) {
         this.voteAverage = voteAverage;
     }
 

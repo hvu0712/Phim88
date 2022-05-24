@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity {
         viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
         viewModel.getGenres().observe(this, genres -> {
             adapter.setData(genres);
+            Log.e(TAG, "onCreate: "+genres);
             adapter.notifyDataSetChanged();
         });
         viewModel.requestGenres();

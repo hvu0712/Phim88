@@ -34,6 +34,7 @@ public class Repository {
 
         genresApi = requestTheMovieDb.create(GenresApi.class);
         popularApi = requestTheMovieDb.create(PopularApi.class);
+        upcomingApi = requestTheMovieDb.create(UpcomingApi.class);
 
     }
 

@@ -4,22 +4,33 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.phim88.databinding.ItemCategoryBinding;
-import com.example.phim88.model.popular.Category;
+import com.example.phim88.model.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private List<Category> mList;
 
+    public CategoryAdapter() {
+        mList = new ArrayList<>();
+    }
+
     public void setData(List<Category> list) {
-        this.mList = list;
+        if (list == null) {
+            return;
+        }
+        mList.clear();
+        mList.addAll(list);
         notifyDataSetChanged();
     }
+
 
     @NonNull
     @Override
@@ -36,11 +47,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
         holder.movieAdapter.setData(category.getMovies());
 
+        holder.upcomingAdapter.setUpcoming(category.getUpcomings());
+
         holder.binding.tvGenre.setText(category.getNameCategory());
 
         holder.binding.rcvMovie.setLayoutManager(holder.staggeredGridLayoutManager);
 
-        holder.binding.rcvMovie.setAdapter(holder.movieAdapter);
+        holder.binding.rcvMovie.setAdapter(holder.concatAdapter);
 
     }
 
@@ -57,13 +70,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         StaggeredGridLayoutManager staggeredGridLayoutManager;
         ItemCategoryBinding binding;
         MovieAdapter movieAdapter;
+        UpcomingAdapter upcomingAdapter;
+        ConcatAdapter concatAdapter;
 
         public CategoryViewHolder(@NonNull ItemCategoryBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
             staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+            upcomingAdapter = new UpcomingAdapter(binding.btnMore.getContext());
             movieAdapter = new MovieAdapter(binding.getRoot().getContext());
+            concatAdapter = new ConcatAdapter(movieAdapter, upcomingAdapter);
         }
     }
 }

@@ -14,52 +14,47 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.phim88.R;
-import com.example.phim88.databinding.FragmentMainBinding;
 import com.example.phim88.databinding.ItemMovieBinding;
-import com.example.phim88.model.popular.Popular;
 import com.example.phim88.model.upcoming.Upcoming;
-import com.example.phim88.view.activity.BaseActivity;
 import com.example.phim88.view.fragment.DetailFragment;
 
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder> {
 
-    private List<Popular> mListMovie;
-
+    private List<Upcoming> upcomings;
 
     private Context context;
 
-    public MovieAdapter(Context context) {
+    public UpcomingAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<Popular> list) {
-        this.mListMovie = list;
+    public void setUpcoming(List<Upcoming> upcoming) {
+        this.upcomings = upcoming;
         notifyDataSetChanged();
     }
 
-
     @NonNull
     @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UpcomingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         ItemMovieBinding binding = ItemMovieBinding.inflate(inflater, parent, false);
 
-        return new MovieViewHolder(binding);
+        return new UpcomingViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Popular popular = mListMovie.get(position);
-        if (popular == null) {
+    public void onBindViewHolder(@NonNull UpcomingViewHolder holder, int position) {
+        Upcoming upcoming = upcomings.get(position);
+        if (upcoming == null) {
             return;
         }
         String img_base = "https://image.tmdb.org/t/p/w500/";
-        holder.binding.tvName.setText(popular.getTitle());
+        holder.binding.tvName.setText(upcoming.getTitle());
         Glide.with(context)
-                .load(img_base + popular.getPosterPath())
+                .load(img_base + upcoming.getPosterPath())
                 .into(holder.binding.imgItem);
         holder.binding.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,18 +76,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        if (mListMovie != null) {
-            return mListMovie.size();
+        if (upcomings != null) {
+            return upcomings.size();
         }
         return 0;
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class UpcomingViewHolder extends RecyclerView.ViewHolder {
 
 
         public ItemMovieBinding binding;
 
-        public MovieViewHolder(@NonNull ItemMovieBinding binding) {
+        public UpcomingViewHolder(@NonNull ItemMovieBinding binding) {
 
             super(binding.getRoot());
             this.binding = binding;

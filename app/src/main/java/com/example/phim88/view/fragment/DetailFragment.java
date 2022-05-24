@@ -16,7 +16,7 @@ import com.example.phim88.view.activity.MainActivity;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends BaseFragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
