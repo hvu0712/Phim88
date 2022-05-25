@@ -1,6 +1,7 @@
 package com.example.phim88.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,7 +14,8 @@ import com.example.phim88.R;
 import com.google.gson.Gson;
 
 public class BaseActivity extends AppCompatActivity {
-    protected Gson gson = new Gson();
+    protected Gson gson;
+    protected Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

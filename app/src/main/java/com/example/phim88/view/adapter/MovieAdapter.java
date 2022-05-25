@@ -1,6 +1,8 @@
 package com.example.phim88.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.phim88.R;
-import com.example.phim88.databinding.FragmentMainBinding;
+import com.example.phim88.databinding.FragmentDetailBinding;
 import com.example.phim88.databinding.ItemMovieBinding;
 import com.example.phim88.model.popular.Popular;
-import com.example.phim88.model.upcoming.Upcoming;
-import com.example.phim88.view.activity.BaseActivity;
 import com.example.phim88.view.fragment.DetailFragment;
+import com.example.phim88.viewmodel.PopularViewModel;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Popular> mListMovie;
+    PopularViewModel popularViewModel;
+    FragmentDetailBinding binding;
+    int adapterPosition;
+    private static final String TAG = "MovieAdapter";
 
 
     private Context context;
@@ -39,6 +44,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         notifyDataSetChanged();
     }
 
+    public int getAdapterPosition() {
+        return adapterPosition;
+    }
+
+    public void setAdapterPosition(int adapterPosition) {
+        this.adapterPosition = adapterPosition;
+    }
 
     @NonNull
     @Override
@@ -61,22 +73,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         Glide.with(context)
                 .load(img_base + popular.getPosterPath())
                 .into(holder.binding.imgItem);
-        holder.binding.layoutItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment detailFragment = new DetailFragment();
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out)
-                        .add(R.id.fragment_container, detailFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+
+//        holder.binding.layoutItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                Fragment detailFragment = new DetailFragment();
+//                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.setCustomAnimations(R.anim.slide_in,
+//                        R.anim.fade_out,
+//                        R.anim.fade_in,
+//                        R.anim.slide_out)
+//                        .add(R.id.fragment_container, detailFragment)
+//                        .addToBackStack(null)
+//                        .commit();
+//            }
+//        });
     }
 
     @Override
@@ -85,6 +98,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             return mListMovie.size();
         }
         return 0;
+    }
+
+    public Popular getSelectedPopular(int position){
+        if (mListMovie != null){
+            if (mListMovie.size() > 0){
+                return mListMovie.get(position);
+            }
+        }
+        return null;
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -96,6 +118,28 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             super(binding.getRoot());
             this.binding = binding;
+
+            binding.layoutItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment detailFragment = new DetailFragment();
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.slide_out)
+                            .add(R.id.fragment_container, detailFragment)
+                            .addToBackStack(null)
+                            .commit();
+                    adapterPosition = getAdapterPosition();
+                    setAdapterPosition(adapterPosition);
+                    Log.e(TAG, "onClick: "+adapterPosition);
+                }
+
+            });
+
 
         }
     }

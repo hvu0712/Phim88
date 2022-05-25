@@ -1,30 +1,18 @@
 package com.example.phim88.view.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentSearchBinding;
-import com.example.phim88.view.activity.BaseActivity;
-import com.example.phim88.view.activity.MainActivity;
 
-public class SearchFragment extends BaseFragment{
+public class SearchFragment extends BaseFragment {
     private static final String TAG = "SearchFragment";
 
     private FragmentSearchBinding binding;
@@ -46,7 +34,7 @@ public class SearchFragment extends BaseFragment{
             public void onClick(View view) {
 //                Intent intent = new Intent(getContext(), MainActivity.class);
 //                startActivity(intent);
-                if(callback != null) callback.back();
+                if (callback != null) callback.back();
             }
         });
 

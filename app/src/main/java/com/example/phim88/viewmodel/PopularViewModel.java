@@ -52,22 +52,4 @@ public class PopularViewModel extends BaseViewModel {
         });
     }
 
-    public List<Category> abc() {
-        getListPopular().observe(getApplication(), populars -> {
-            if (populars != null && populars.size() > 0) {
-                for (Popular popular : populars) {
-                    movieListPopular.add(new Popular(popular.getPosterPath(), popular.getTitle()));
-                }
-                Log.e(TAG, "movieListPopular: " + movieListPopular.size());
-                listCategory.add(category);
-                category = new Category() {
-                    {
-                        setMovies(movieListPopular);
-                        setNameCategory("Popular");
-                    }
-                };
-            }
-        });
-        return listCategory;
-    }
 }

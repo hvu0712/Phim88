@@ -1,6 +1,11 @@
 package com.example.phim88.view.adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,6 +15,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.phim88.databinding.ItemCategoryBinding;
 import com.example.phim88.model.Category;
+import com.example.phim88.view.fragment.DetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +23,8 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private List<Category> mList;
+    private static final String TAG = "CategoryAdapter";
+    private MovieAdapter movieAdapter;
 
     public CategoryAdapter() {
         mList = new ArrayList<>();
@@ -40,7 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Category category = mList.get(position);
         if (category == null) {
             return;
@@ -50,6 +58,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.upcomingAdapter.setUpcoming(category.getUpcomings());
 
         holder.binding.tvGenre.setText(category.getNameCategory());
+        
+        holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.binding.getRoot().getContext(), DetailFragment.class);
+                intent.putExtra("moviePopular", String.valueOf(movieAdapter.getSelectedPopular(position)));
+            }
+        });
 
         holder.binding.rcvMovie.setLayoutManager(holder.staggeredGridLayoutManager);
 
