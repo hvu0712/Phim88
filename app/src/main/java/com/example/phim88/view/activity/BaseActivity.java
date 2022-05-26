@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 
 public class BaseActivity extends AppCompatActivity {
     protected Gson gson;
-    protected Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
                 R.anim.fade_out,
                 R.anim.fade_in,
                 R.anim.slide_out)
-                .add(id, fragment)
+                .add(id, fragment, null)
                 .addToBackStack(null)
                 .commit();
     }

@@ -64,10 +64,9 @@ public class MainFragment extends BaseFragment {
         popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
             if (populars != null && populars.size() > 0){
                 for (Popular popular : populars){
-                    movieListPopular.add(new Popular(popular.getPosterPath(), popular.getTitle()));
+                    movieListPopular.add(new Popular(popular.getPosterPath(), popular.getTitle(), popular.getId()));
                 }
-                Log.e(TAG, "fetchPopular: "+populars);
-                Log.e(TAG, "movieListPopular: "+movieListPopular.size() );
+
                 listCategory.add(category);
             }
             category = new Category(){
@@ -76,6 +75,7 @@ public class MainFragment extends BaseFragment {
                     setNameCategory("Popular");
                 }
             };
+            Log.e(TAG, "fetchPopular: ");
             categoryAdapter.setData(listCategory);
             binding.rcvCategory.setAdapter(categoryAdapter);
             binding.rcvCategory.setLayoutManager(linearLayoutManager);
@@ -94,7 +94,6 @@ public class MainFragment extends BaseFragment {
 
     public void fetchUpcoming(){
         // get value upcoming
-
         upcomingViewModel = new ViewModelProvider(this).get(UpcomingViewModel.class);
         upcomingViewModel.getListUpcoming().observe(getViewLifecycleOwner(), upcomings -> {
             if (upcomings != null && upcomings.size() > 0){

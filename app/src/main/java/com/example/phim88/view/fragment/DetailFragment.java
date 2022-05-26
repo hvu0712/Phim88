@@ -1,6 +1,5 @@
 package com.example.phim88.view.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,33 +16,18 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentDetailBinding;
-import com.example.phim88.databinding.ItemMovieBinding;
-import com.example.phim88.model.Category;
-import com.example.phim88.model.popular.Popular;
 import com.example.phim88.view.activity.MainActivity;
-import com.example.phim88.view.adapter.CategoryAdapter;
-import com.example.phim88.view.adapter.MovieAdapter;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
-import com.example.phim88.viewmodel.PopularViewModel;
-import com.google.android.material.tabs.TabLayout;
+import com.example.phim88.viewmodel.DetailViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class DetailFragment extends BaseFragment {
 
-    private TabLayout tabLayout;
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private SearchFragment.Callback callback;
-    private PopularViewModel popularViewModel;
-    private CategoryAdapter categoryAdapter = new CategoryAdapter();
-    private List<Popular> movieListPopular = new ArrayList<>();
     private static final String TAG = "DetailFragment";
-    private List<Category> listCategory = new ArrayList<>();
-    private Category category;
     private FragmentDetailBinding binding;
-    private ItemMovieBinding bindingItem;
+    private DetailViewModel detailViewModel;
 
     @Nullable
     @Override
@@ -57,15 +41,29 @@ public class DetailFragment extends BaseFragment {
         binding.tabLayout.setupWithViewPager(viewPager);
         fetchImg();
 
+
         return binding.getRoot();
     }
 
 
     public void fetchImg() {
-        if (getActivity().getIntent().hasExtra("moviePopular")){
-            Popular popular = getActivity().getIntent().getParcelableExtra("moviePopular");
-            Log.e(TAG, "fetchImg: "+popular.getTitle());
-        }
+//        PublishSubject<String> subject = PublishSubject.create();
+//        subject.subscribe();
+//        Log.e(TAG, "fetchImg: "+subject.subscribe());
+        String title = getArguments().getString("title");
+        String img = getArguments().getString("img");
+        String img_base = "https://image.tmdb.org/t/p/w500/";
+        int id = getArguments().getInt("id");
+        Log.e(TAG, "id: " + id);
+        Glide.with(this)
+                .load(img_base + img)
+                .into(binding.imageView2);
+        binding.textView6.setText(title);
+        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+        detailViewModel.getListDetail().observe(getViewLifecycleOwner(), details -> {
+            Log.e(TAG, "fetchImg: " + details.size());
+        });
+        detailViewModel.RequestListDetail();
     }
 
     public interface Callback {

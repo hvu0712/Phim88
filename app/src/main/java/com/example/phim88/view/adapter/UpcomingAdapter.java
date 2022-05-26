@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,15 +62,17 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Fragment detailFragment = new DetailFragment();
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out)
-                        .add(R.id.fragment_container, detailFragment)
-                        .addToBackStack(null)
-                        .commit();
+//                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                transaction.setCustomAnimations(R.anim.slide_in,
+//                        R.anim.fade_out,
+//                        R.anim.fade_in,
+//                        R.anim.slide_out)
+//                        .add(R.id.fragment_main, detailFragment)
+//                        .addToBackStack(null)
+//                        .commit();
+                Toast.makeText(activity, upcoming.getTitle(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }

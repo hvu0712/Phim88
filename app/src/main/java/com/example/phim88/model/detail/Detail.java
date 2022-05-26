@@ -1,60 +1,53 @@
-package com.example.phim88.model.popular;
+package com.example.phim88.model.detail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Popular {
-    public Popular(String posterPath, String title, Integer id) {
-        this.posterPath = posterPath;
-        this.title = title;
-        this.id = id;
-    }
-
-
+public class Detail {
     @SerializedName("adult")
     @Expose
-    private Boolean adult;
+    public Boolean adult;
     @SerializedName("backdrop_path")
     @Expose
-    private String backdropPath;
+    public String backdropPath;
     @SerializedName("genre_ids")
     @Expose
-    private List<Integer> genreIds = null;
+    public List<Integer> genreIds = null;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    public Integer id;
     @SerializedName("original_language")
     @Expose
-    private String originalLanguage;
+    public String originalLanguage;
     @SerializedName("original_title")
     @Expose
-    private String originalTitle;
+    public String originalTitle;
     @SerializedName("overview")
     @Expose
-    private String overview;
+    public String overview;
     @SerializedName("popularity")
     @Expose
-    private Float popularity;
+    public Float popularity;
     @SerializedName("poster_path")
     @Expose
-    private String posterPath;
+    public String posterPath;
     @SerializedName("release_date")
     @Expose
-    private String releaseDate;
+    public String releaseDate;
     @SerializedName("title")
     @Expose
-    private String title;
+    public String title;
     @SerializedName("video")
     @Expose
-    private Boolean video;
+    public Boolean video;
     @SerializedName("vote_average")
     @Expose
-    private Float voteAverage;
+    public Float voteAverage;
     @SerializedName("vote_count")
     @Expose
-    private Integer voteCount;
+    public Integer voteCount;
 
     public Boolean getAdult() {
         return adult;
@@ -167,5 +160,4 @@ public class Popular {
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
-
 }

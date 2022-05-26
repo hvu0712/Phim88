@@ -1,15 +1,20 @@
 package com.example.phim88.control;
 
+import com.example.phim88.control.api.DetailApi;
 import com.example.phim88.control.api.GenresApi;
 import com.example.phim88.control.api.PopularApi;
+import com.example.phim88.control.api.SearchApi;
 import com.example.phim88.control.api.UpcomingApi;
+import com.example.phim88.model.detail.DetailResponse;
 import com.example.phim88.model.genre.GenreResponse;
 import com.example.phim88.model.popular.PopularResponse;
 import com.example.phim88.model.upcoming.UpcomingResponse;
 import com.example.phim88.util.Const;
+import com.example.phim88.view.fragment.SearchFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,6 +25,8 @@ public class Repository {
     private GenresApi genresApi;
     private PopularApi popularApi;
     private UpcomingApi upcomingApi;
+    private SearchApi searchApi;
+    private DetailApi detailApi;
 
     private Retrofit requestTheMovieDb;
 
@@ -35,7 +42,8 @@ public class Repository {
         genresApi = requestTheMovieDb.create(GenresApi.class);
         popularApi = requestTheMovieDb.create(PopularApi.class);
         upcomingApi = requestTheMovieDb.create(UpcomingApi.class);
-
+        searchApi = requestTheMovieDb.create(SearchApi.class);
+        detailApi = requestTheMovieDb.create(DetailApi.class);
     }
 
     public void callApi(RequestCallback callback){
@@ -78,6 +86,36 @@ public class Repository {
 
             @Override
             public void onFailure(Call<UpcomingResponse> call, Throwable t) {
+                callback.fail(t.getMessage());
+            }
+        });
+    }
+
+    public void callSearch(RequestCallback callback, String query){
+        Call<PopularResponse> call = searchApi.getSearch(Const.info.key, Const.info.language, query, 1, false);
+        call.enqueue(new Callback<PopularResponse>() {
+            @Override
+            public void onResponse(Call<PopularResponse> call, Response<PopularResponse> response) {
+                callback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PopularResponse> call, Throwable t) {
+                callback.fail(t.getMessage());
+            }
+        });
+    }
+
+    public void callDetail(RequestCallback callback){
+        Call<DetailResponse> call = detailApi.getDetail(639933,Const.info.key, Const.info.language);
+        call.enqueue(new Callback<DetailResponse>() {
+            @Override
+            public void onResponse(Call<DetailResponse> call, Response<DetailResponse> response) {
+                callback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DetailResponse> call, Throwable t) {
                 callback.fail(t.getMessage());
             }
         });

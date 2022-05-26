@@ -9,4 +9,7 @@
         android:endColor="@android:color/transparent"
         android:startColor="#080808"
         android:type="linear" />
+    <stroke
+        android:color="#0A9CEA"
+        android:width="1dp"/>
 </shape>
