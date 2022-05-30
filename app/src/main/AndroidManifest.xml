@@ -3,7 +3,7 @@
     package="com.example.phim88">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +11,8 @@
         android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Phim88">
+        android:theme="@style/Theme.Phim88"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="false" />

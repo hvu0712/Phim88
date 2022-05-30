@@ -16,12 +16,11 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
-
     @NonNull
     @Override
     public Fragment getItem(int position) {
 
-        switch (position){
+        switch (position) {
             case 0:
                 return new TrailerFragment();
 
@@ -32,7 +31,7 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new ProducerFragment();
 
             default:
-                return new TrailerFragment() ;
+                return new TrailerFragment();
         }
 
     }
@@ -46,20 +45,19 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         String tittle = "";
-        switch (position){
-            case 0 :
+        switch (position) {
+            case 0:
                 tittle = "Trailer";
                 break;
 
-            case 1 :
+            case 1:
                 tittle = "Cats";
                 break;
 
-            case 2 :
+            case 2:
                 tittle = "Producer";
                 break;
         }
-
         return tittle;
     }
 }

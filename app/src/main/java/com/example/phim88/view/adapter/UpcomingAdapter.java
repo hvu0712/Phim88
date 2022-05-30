@@ -1,6 +1,7 @@
 package com.example.phim88.view.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.phim88.R;
 import com.example.phim88.databinding.ItemMovieBinding;
 import com.example.phim88.model.upcoming.Upcoming;
 import com.example.phim88.view.fragment.DetailFragment;
+import com.example.phim88.view.fragment.TrailerFragment;
 
 import java.util.List;
 
@@ -62,16 +64,27 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Fragment detailFragment = new DetailFragment();
-//                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.setCustomAnimations(R.anim.slide_in,
-//                        R.anim.fade_out,
-//                        R.anim.fade_in,
-//                        R.anim.slide_out)
-//                        .add(R.id.fragment_main, detailFragment)
-//                        .addToBackStack(null)
-//                        .commit();
+                TrailerFragment trailerFragment = new TrailerFragment();
                 Toast.makeText(activity, upcoming.getTitle(), Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("title", upcoming.getTitle());
+                bundle.putString("img", upcoming.getPosterPath());
+                bundle.putString("overview", upcoming.getOverview());
+                bundle.putFloat("voteAverage", upcoming.getVoteAverage());
+                bundle.putBoolean("adult", upcoming.getAdult());
+                bundle.putInt("id", upcoming.getId());
+                bundle.putString("backdrop", upcoming.getBackdropPath());
+                detailFragment.setArguments(bundle);
+                trailerFragment.setArguments(bundle);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out)
+                        .replace(R.id.fragment_container, detailFragment)
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });

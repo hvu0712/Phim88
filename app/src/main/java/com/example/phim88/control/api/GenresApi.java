@@ -7,7 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface GenresApi {
-    // 3/movie/popular 3/genre/movie/list
     @GET("3/genre/movie/list")
     Call<GenreResponse> getGenres(@Query("api_key") String key, @Query("language") String language);
 }

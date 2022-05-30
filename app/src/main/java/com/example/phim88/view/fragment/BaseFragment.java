@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.phim88.view.activity.MainActivity;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 
 public class BaseFragment extends Fragment {
 
@@ -15,12 +16,5 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
-    public void initToolBar(Toolbar toolbar){
-        ((MainActivity) requireActivity() ).setSupportActionBar(toolbar);
-        ((MainActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity) requireActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
 
 }

@@ -10,8 +10,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.phim88.R;
+import com.google.android.youtube.player.YouTubeBaseActivity;
 
-public class SplashScreen extends BaseActivity {
+public class SplashScreen extends  YouTubeBaseActivity {
     private static final int FLASH_TIME_OUT = 3000;
 
     private View first , second ,third , fourth , fifth,sixth;

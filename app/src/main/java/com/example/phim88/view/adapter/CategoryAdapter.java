@@ -63,7 +63,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.binding.getRoot().getContext(), DetailFragment.class);
-                intent.putExtra("moviePopular", String.valueOf(movieAdapter.getSelectedPopular(position)));
             }
         });
 

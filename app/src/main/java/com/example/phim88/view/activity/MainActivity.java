@@ -2,14 +2,10 @@ package com.example.phim88.view.activity;
 
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,29 +15,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.example.phim88.R;
 import com.example.phim88.databinding.ActivityMainBinding;
-import com.example.phim88.databinding.FragmentMainBinding;
 import com.example.phim88.view.adapter.GenresAdapter;
 import com.example.phim88.view.fragment.SearchFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -136,7 +118,7 @@ public class MainActivity extends BaseActivity {
         animator.start();
     }
 
-    public void createDialog(){
+    public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View alert = LayoutInflater.from(this).inflate(R.layout.dialog_app_info, null);
         int width = this.getResources().getDisplayMetrics().widthPixels * 95 / 100;
@@ -148,7 +130,6 @@ public class MainActivity extends BaseActivity {
         builder.setView(alert);
         builder.create().show();
     }
-
 
 
 }

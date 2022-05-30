@@ -54,6 +54,8 @@ public class MainFragment extends BaseFragment {
 
         fetchUpcoming();
 
+        Log.e(TAG, "onCreateView: "+movieListPopular);
+
         return binding.getRoot();
     }
 
@@ -64,7 +66,7 @@ public class MainFragment extends BaseFragment {
         popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
             if (populars != null && populars.size() > 0){
                 for (Popular popular : populars){
-                    movieListPopular.add(new Popular(popular.getPosterPath(), popular.getTitle(), popular.getId()));
+                    movieListPopular.add(new Popular(popular.getPosterPath(), popular.getTitle(), popular.getId(), popular.getOverview(), popular.getVoteAverage(), popular.getGenreIds(), popular.getAdult(), popular.getBackdropPath()));
                 }
 
                 listCategory.add(category);
@@ -98,7 +100,7 @@ public class MainFragment extends BaseFragment {
         upcomingViewModel.getListUpcoming().observe(getViewLifecycleOwner(), upcomings -> {
             if (upcomings != null && upcomings.size() > 0){
                 for (Upcoming upcoming : upcomings){
-                    movieListUpcoming.add(new Upcoming(upcoming.getPosterPath(), upcoming.getTitle()));
+                    movieListUpcoming.add(new Upcoming(upcoming.getAdult(), upcoming.getId(), upcoming.getOverview(), upcoming.getPosterPath(), upcoming.getTitle(), upcoming.getVoteAverage(), upcoming.getBackdropPath()));
                 }
                 listCategory.add(upcoming);
             }

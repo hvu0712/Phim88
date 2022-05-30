@@ -6,6 +6,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Upcoming {
+    public Upcoming(Boolean adult, Integer id, String overview, String posterPath, String title, Float voteAverage, String backdropPath) {
+        this.adult = adult;
+        this.id = id;
+        this.overview = overview;
+        this.posterPath = posterPath;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.backdropPath = backdropPath;
+    }
+
     @SerializedName("adult")
     @Expose
     public Boolean adult;
@@ -49,10 +59,7 @@ public class Upcoming {
     @Expose
     public Integer voteCount;
 
-    public Upcoming(String posterPath, String title) {
-        this.posterPath = posterPath;
-        this.title = title;
-    }
+
 
     public Boolean getAdult() {
         return adult;
