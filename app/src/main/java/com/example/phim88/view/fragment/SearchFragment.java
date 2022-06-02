@@ -1,7 +1,6 @@
 package com.example.phim88.view.fragment;
 
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.phim88.R;
-import com.example.phim88.control.Repository;
 import com.example.phim88.databinding.FragmentSearchBinding;
-import com.example.phim88.model.genre.GenreResponse;
-
-import java.util.Observable;
 
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
@@ -25,9 +20,9 @@ public class SearchFragment extends BaseFragment {
     private static final String TAG = "SearchFragment";
 
     private FragmentSearchBinding binding;
-    private String a;
+
     private Callback callback;
-    private Repository repository;
+
 
     public void setCallback(Callback callback) {
         this.callback = callback;
@@ -45,7 +40,7 @@ public class SearchFragment extends BaseFragment {
         binding.searchViewMovie.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e(TAG, "onQueryTextSubmit: "+query);
+                Log.e(TAG, "onQueryTextSubmit: " + query);
 
                 subject.onComplete();
                 return true;
@@ -53,7 +48,7 @@ public class SearchFragment extends BaseFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty() == false){
+                if (newText.isEmpty() == false) {
                     subject.onNext(newText);
                 }
                 return true;
@@ -63,8 +58,6 @@ public class SearchFragment extends BaseFragment {
         binding.searchToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), MainActivity.class);
-//                startActivity(intent);
                 if (callback != null) callback.back();
             }
         });
@@ -72,6 +65,11 @@ public class SearchFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.e(TAG, "onDetach: ");
+    }
 
     public interface Callback {
         void back();

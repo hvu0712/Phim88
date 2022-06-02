@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -8,15 +9,23 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/vv_trailer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+<!--        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView-->
+<!--            android:id="@+id/videoViewTrailer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:enableAutomaticInitialization="true"-->
+<!--            app:handleNetworkEvents="true"-->
+<!--            />-->
 <!--        <com.google.android.youtube.player.YouTubePlayerView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
 <!--            android:id="@+id/vv_trailer"/>-->
+        <Button
+            android:id="@+id/gogogo"
+            android:text="click here"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="OnClick" />
 
     </LinearLayout>
 </layout>

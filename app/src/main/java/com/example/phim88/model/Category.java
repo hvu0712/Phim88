@@ -22,12 +22,15 @@ public class Category {
     public List<Popular> getMovies() {
         return movies;
     }
+
     public void setMovies(List<Popular> movies) {
         this.movies = movies;
     }
+
     public List<Upcoming> getUpcomings() {
         return upcomings;
     }
+
     public void setUpcomings(List<Upcoming> upcomings) {
         this.upcomings = upcomings;
     }

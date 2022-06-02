@@ -4,10 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Video {
-    public Video(String key) {
-        this.key = key;
-    }
-
     @SerializedName("iso_639_1")
     @Expose
     public String iso6391;
@@ -38,6 +34,10 @@ public class Video {
     @SerializedName("id")
     @Expose
     public String id;
+
+    public Video(String key) {
+        this.key = key;
+    }
 
     public String getIso6391() {
         return iso6391;

@@ -34,8 +34,7 @@
             app:cardCornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/cardview_detail"
             app:layout_constraintStart_toStartOf="@+id/cardview_detail"
-            app:layout_constraintTop_toBottomOf="@+id/cardview_detail"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/cardview_detail">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -45,14 +44,9 @@
                 android:src="@drawable/demo1" />
 
         </androidx.cardview.widget.CardView>
-//
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardview_detail">
+        //
 
-        </ScrollView>
+
         <TextView
             android:id="@+id/tv_movieName"
             android:layout_width="0dp"
@@ -78,12 +72,12 @@
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
-            android:stepSize="0.5"
-            android:rating="5"
-            android:isIndicator="true"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:isIndicator="true"
+            android:rating="5"
+            android:stepSize="0.5"
             android:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/tv_movieName" />
@@ -214,7 +208,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
-//
+        //
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -235,6 +230,7 @@
             app:layout_constraintLeft_toLeftOf="@id/tab_layout"
             app:layout_constraintRight_toRightOf="@id/tab_layout"
             app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

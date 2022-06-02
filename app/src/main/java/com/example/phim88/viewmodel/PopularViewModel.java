@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopularViewModel extends BaseViewModel {
-    private MutableLiveData<List<Popular>> listPopular;
     private static final String TAG = "PopularViewModel";
+    private MutableLiveData<List<Popular>> listPopular;
 
 
     public PopularViewModel(@NonNull Application application) {

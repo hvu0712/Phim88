@@ -12,18 +12,18 @@ import android.widget.TextView;
 import com.example.phim88.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 
-public class SplashScreen extends  YouTubeBaseActivity {
+public class SplashScreen extends YouTubeBaseActivity {
     private static final int FLASH_TIME_OUT = 3000;
 
-    private View first , second ,third , fourth , fifth,sixth;
-    private TextView h , slogan;
+    private View first, second, third, fourth, fifth, sixth;
+    private TextView h, slogan;
 
-    private Animation topAnimation , middleAnimation ,bottonAnimation ;
+    private Animation topAnimation, middleAnimation, bottonAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -38,7 +38,7 @@ public class SplashScreen extends  YouTubeBaseActivity {
         sixth = findViewById(R.id.line6);
 
         h = findViewById(R.id.textH);
-        slogan= findViewById(R.id.tagLine);
+        slogan = findViewById(R.id.tagLine);
 
         first.setAnimation(topAnimation);
         second.setAnimation(topAnimation);
@@ -57,7 +57,7 @@ public class SplashScreen extends  YouTubeBaseActivity {
                 startActivity(intent);
                 finish();
             }
-        },FLASH_TIME_OUT);
-       
+        }, FLASH_TIME_OUT);
+
     }
 }

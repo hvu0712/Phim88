@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.phim88.R;
 import com.example.phim88.databinding.ActivityMainBinding;
 import com.example.phim88.view.adapter.GenresAdapter;
+import com.example.phim88.view.fragment.DetailFragment;
 import com.example.phim88.view.fragment.SearchFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
 
@@ -42,6 +43,8 @@ public class MainActivity extends BaseActivity {
         LayoutInflater inflater = getLayoutInflater();
         binding = ActivityMainBinding.inflate(inflater, null, false);
         setContentView(binding.getRoot());
+
+        DetailFragment detailFragment = new DetailFragment();
 
         setSupportActionBar(binding.toolBar);
         ActionBar actionBar = getSupportActionBar();

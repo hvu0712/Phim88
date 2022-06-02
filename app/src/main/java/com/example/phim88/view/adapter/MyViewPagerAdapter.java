@@ -11,10 +11,12 @@ import com.example.phim88.view.fragment.ProducerFragment;
 import com.example.phim88.view.fragment.TrailerFragment;
 
 public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
+    TrailerFragment trailerFragment;
+    int id;
+
     public MyViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
-
 
     @NonNull
     @Override
@@ -22,8 +24,10 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                return new TrailerFragment();
-
+                if (trailerFragment == null) {
+                    trailerFragment = new TrailerFragment();
+                }
+                return trailerFragment;
             case 1:
                 return new CatsFragment();
 
@@ -31,14 +35,22 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new ProducerFragment();
 
             default:
-                return new TrailerFragment();
+                if (trailerFragment == null) {
+                    trailerFragment = new TrailerFragment();
+                }
+                return trailerFragment;
         }
 
     }
 
+
     @Override
     public int getCount() {
         return 3;
+    }
+
+    public void setData(int id) {
+        this.id = id;
     }
 
     @Nullable

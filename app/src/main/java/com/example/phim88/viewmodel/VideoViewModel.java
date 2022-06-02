@@ -13,10 +13,10 @@ import com.example.phim88.model.Video.VideoResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoViewModel extends BaseViewModel{
+public class VideoViewModel extends BaseViewModel {
 
+    private final MutableLiveData<Integer> id = new MutableLiveData<>();
     private MutableLiveData<List<Video>> listVideo;
-    private MutableLiveData<Integer> id = new MutableLiveData<>();
 
     public VideoViewModel(@NonNull Application application) {
         super(application);
@@ -26,25 +26,25 @@ public class VideoViewModel extends BaseViewModel{
         id.postValue(data);
     }
 
-    public LiveData<Integer> getSelectedId(){
+    public LiveData<Integer> getSelectedId() {
         return id;
     }
 
     public MutableLiveData<List<Video>> getListVideo() {
-        if (listVideo == null){
+        if (listVideo == null) {
             listVideo = new MutableLiveData<>();
             listVideo.setValue(new ArrayList<>());
         }
         return listVideo;
     }
 
-    public void requestVideo(int movie_id){
+    public void requestVideo(int movie_id) {
         repository.callVideo(new Repository.RequestCallback() {
             @Override
             public void success(Object object) {
-                if (object != null && object instanceof VideoResponse){
+                if (object != null && object instanceof VideoResponse) {
                     List<Video> videoList = ((VideoResponse) object).getResults();
-                    if (videoList != null && videoList.size() > 0){
+                    if (videoList != null && videoList.size() > 0) {
                         VideoViewModel.this.listVideo.postValue(videoList);
                     }
                 }

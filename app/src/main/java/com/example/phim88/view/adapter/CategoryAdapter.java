@@ -2,28 +2,31 @@ package com.example.phim88.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.phim88.R;
 import com.example.phim88.databinding.ItemCategoryBinding;
 import com.example.phim88.model.Category;
 import com.example.phim88.view.fragment.DetailFragment;
+import com.example.phim88.view.fragment.MorePopularFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private List<Category> mList;
     private static final String TAG = "CategoryAdapter";
+    private final List<Category> mList;
     private MovieAdapter movieAdapter;
 
     public CategoryAdapter() {
@@ -58,7 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.upcomingAdapter.setUpcoming(category.getUpcomings());
 
         holder.binding.tvGenre.setText(category.getNameCategory());
-        
+
         holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +72,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.binding.rcvMovie.setLayoutManager(holder.staggeredGridLayoutManager);
 
         holder.binding.rcvMovie.setAdapter(holder.concatAdapter);
+
+        holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MorePopularFragment morePopularFragment = new MorePopularFragment();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out)
+                        .replace(R.id.fragment_container, morePopularFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
     }
 

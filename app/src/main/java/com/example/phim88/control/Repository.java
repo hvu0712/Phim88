@@ -8,7 +8,6 @@ import com.example.phim88.control.api.PopularApi;
 import com.example.phim88.control.api.SearchApi;
 import com.example.phim88.control.api.UpcomingApi;
 import com.example.phim88.control.api.VideoApi;
-import com.example.phim88.model.Video.Video;
 import com.example.phim88.model.Video.VideoResponse;
 import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.genre.GenreResponse;
@@ -26,17 +25,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
-    private GenresApi genresApi;
-    private PopularApi popularApi;
-    private UpcomingApi upcomingApi;
-    private SearchApi searchApi;
-    private DetailApi detailApi;
-    private VideoApi videoApi;
-    private DetailFragment detailFragment;
-
-    private Retrofit requestTheMovieDb;
-    private Context context;
     private static final String TAG = "Repository";
+    private final GenresApi genresApi;
+    private final PopularApi popularApi;
+    private final UpcomingApi upcomingApi;
+    private final SearchApi searchApi;
+    private final DetailApi detailApi;
+    private final VideoApi videoApi;
+    private final Retrofit requestTheMovieDb;
+    private DetailFragment detailFragment;
+    private Context context;
 
     public Repository() {
         Gson gson = new GsonBuilder()
@@ -132,7 +130,7 @@ public class Repository {
         });
     }
 
-    public void callVideo(RequestCallback callback, int movie_id){
+    public void callVideo(RequestCallback callback, int movie_id) {
         Call<VideoResponse> call = videoApi.getVideos(movie_id, Const.info.key, Const.info.language);
         call.enqueue(new Callback<VideoResponse>() {
             @Override

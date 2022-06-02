@@ -11,18 +11,17 @@ import java.util.List;
 
 @SuppressLint("ParcelCreator")
 public class Popular implements Parcelable {
-    public Popular(String posterPath, String title, Integer id, String overview, Float voteAverage, List<Integer> genreIds, boolean adult, String backdropPath) {
-        this.posterPath = posterPath;
-        this.title = title;
-        this.id = id;
-        this.overview = overview;
-        this.voteAverage = voteAverage;
-        this.genreIds = genreIds;
-        this.adult = adult;
-        this.backdropPath = backdropPath;
-    }
+    public static final Creator<Popular> CREATOR = new Creator<Popular>() {
+        @Override
+        public Popular createFromParcel(Parcel in) {
+            return new Popular(in);
+        }
 
-
+        @Override
+        public Popular[] newArray(int size) {
+            return new Popular[size];
+        }
+    };
     @SerializedName("adult")
     @Expose
     private Boolean adult;
@@ -66,6 +65,17 @@ public class Popular implements Parcelable {
     @Expose
     private Integer voteCount;
 
+    public Popular(String posterPath, String title, Integer id, String overview, Float voteAverage, List<Integer> genreIds, boolean adult, String backdropPath) {
+        this.posterPath = posterPath;
+        this.title = title;
+        this.id = id;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.genreIds = genreIds;
+        this.adult = adult;
+        this.backdropPath = backdropPath;
+    }
+
     protected Popular(Parcel in) {
         byte tmpAdult = in.readByte();
         adult = tmpAdult == 0 ? null : tmpAdult == 1;
@@ -99,18 +109,6 @@ public class Popular implements Parcelable {
             voteCount = in.readInt();
         }
     }
-
-    public static final Creator<Popular> CREATOR = new Creator<Popular>() {
-        @Override
-        public Popular createFromParcel(Parcel in) {
-            return new Popular(in);
-        }
-
-        @Override
-        public Popular[] newArray(int size) {
-            return new Popular[size];
-        }
-    };
 
     public Boolean getAdult() {
         return adult;

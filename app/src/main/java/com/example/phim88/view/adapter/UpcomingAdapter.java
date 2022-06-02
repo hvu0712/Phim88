@@ -25,9 +25,8 @@ import java.util.List;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder> {
 
+    private final Context context;
     private List<Upcoming> upcomings;
-
-    private Context context;
 
     public UpcomingAdapter(Context context) {
         this.context = context;

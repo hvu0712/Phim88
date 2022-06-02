@@ -9,6 +9,6 @@ import retrofit2.http.Query;
 public interface UpcomingApi {
     @GET("3/movie/upcoming")
     Call<UpcomingResponse> getUpComing(@Query("api_key") String key,
-                                     @Query("language") String language,
-                                     @Query("page") int page);
+                                       @Query("language") String language,
+                                       @Query("page") int page);
 }

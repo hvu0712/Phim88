@@ -2,18 +2,14 @@ package com.example.phim88.view.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,9 +17,7 @@ import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentDetailBinding;
 import com.example.phim88.databinding.ItemMovieBinding;
 import com.example.phim88.model.popular.Popular;
-import com.example.phim88.view.activity.MainActivity;
 import com.example.phim88.view.fragment.DetailFragment;
-import com.example.phim88.view.fragment.MainFragment;
 import com.example.phim88.view.fragment.TrailerFragment;
 import com.example.phim88.viewmodel.VideoViewModel;
 
@@ -32,15 +26,12 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Popular> mListMovie;
-    private List<String> integerList = new ArrayList<>();
     private static final String TAG = "MovieAdapter";
-    private VideoViewModel videoViewModel;
+    private final List<String> integerList = new ArrayList<>();
+    private final Context context;
     FragmentDetailBinding binding1;
-
-
-
-    private Context context;
+    private List<Popular> mListMovie;
+    private VideoViewModel videoViewModel;
 
     public MovieAdapter(Context context) {
         this.context = context;
@@ -78,9 +69,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             @Override
             public void onClick(View view) {
                 DetailFragment detailFragment = new DetailFragment();
-                MainFragment mainFragment = new MainFragment();
                 TrailerFragment trailerFragment = new TrailerFragment();
-                Toast.makeText(view.getContext(), String.valueOf(popular.getId()), Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("title", popular.getTitle());
                 bundle.putString("img", popular.getPosterPath());
@@ -99,13 +88,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                         R.anim.fade_out,
                         R.anim.fade_in,
                         R.anim.slide_out)
-                        .replace(R.id.fragment_container, detailFragment)
+                        .add(R.id.fragment_container, detailFragment)
                         .addToBackStack(null)
                         .commit();
-                }
+            }
         });
     }
-
 
 
     @Override

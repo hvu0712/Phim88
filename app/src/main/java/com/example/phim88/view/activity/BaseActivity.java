@@ -1,7 +1,6 @@
 package com.example.phim88.view.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,11 +10,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.phim88.R;
-import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.gson.Gson;
 
 public class BaseActivity extends AppCompatActivity {
     protected Gson gson;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,8 +22,9 @@ public class BaseActivity extends AppCompatActivity {
 
         gson = new Gson();
     }
+
     @SuppressLint("ResourceType")
-    public void initFragment(int id, Fragment fragment){
+    public void initFragment(int id, Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -36,4 +36,6 @@ public class BaseActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
     }
+
+
 }
