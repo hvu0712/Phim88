@@ -4,14 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.phim88.view.fragment.CatsFragment;
 import com.example.phim88.view.fragment.ProducerFragment;
 import com.example.phim88.view.fragment.TrailerFragment;
 
-public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
-    TrailerFragment trailerFragment;
+public class MyViewPagerAdapter extends FragmentPagerAdapter {
+
     int id;
 
     public MyViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
@@ -24,10 +25,8 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                if (trailerFragment == null) {
-                    trailerFragment = new TrailerFragment();
-                }
-                return trailerFragment;
+                return new TrailerFragment();
+
             case 1:
                 return new CatsFragment();
 
@@ -35,10 +34,7 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new ProducerFragment();
 
             default:
-                if (trailerFragment == null) {
-                    trailerFragment = new TrailerFragment();
-                }
-                return trailerFragment;
+                return new TrailerFragment();
         }
 
     }
@@ -49,9 +45,6 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
         return 3;
     }
 
-    public void setData(int id) {
-        this.id = id;
-    }
 
     @Nullable
     @Override

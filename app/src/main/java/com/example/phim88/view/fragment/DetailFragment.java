@@ -49,9 +49,10 @@ public class DetailFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
         trailerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_trailer, container, false);
 
-
+        new TrailerFragment();
         myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         binding.viewPager.setAdapter(myViewPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(0);
         bundle = new Bundle();
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         fetchDetail();

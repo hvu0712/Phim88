@@ -19,6 +19,8 @@ import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentTrailerBinding;
 import com.example.phim88.model.Video.Video;
 import com.example.phim88.viewmodel.VideoViewModel;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +61,13 @@ public class TrailerFragment extends BaseFragment {
 
             }
         });
-        binding.gogogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), a, Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onClick: " + a);
-            }
-        });
+       binding.videoViewTrailer.initialize(new AbstractYouTubePlayerListener() {
+           @Override
+           public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+               super.onReady(youTubePlayer);
+               youTubePlayer.loadVideo(a, 0f);
+           }
+       });
         Log.e(TAG, "a1: " + a);
         getParentFragmentManager().setFragmentResultListener("dataFromDetail", this, new FragmentResultListener() {
             @Override

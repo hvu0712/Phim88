@@ -9,23 +9,23 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
-<!--        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView-->
-<!--            android:id="@+id/videoViewTrailer"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:enableAutomaticInitialization="true"-->
-<!--            app:handleNetworkEvents="true"-->
-<!--            />-->
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/videoViewTrailer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:enableAutomaticInitialization="false"
+            app:handleNetworkEvents="true"
+            />
 <!--        <com.google.android.youtube.player.YouTubePlayerView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
 <!--            android:id="@+id/vv_trailer"/>-->
-        <Button
-            android:id="@+id/gogogo"
-            android:text="click here"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="OnClick" />
+<!--        <Button-->
+<!--            android:id="@+id/gogogo"-->
+<!--            android:text="click here"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            tools:ignore="OnClick" />-->
 
     </LinearLayout>
 </layout>
