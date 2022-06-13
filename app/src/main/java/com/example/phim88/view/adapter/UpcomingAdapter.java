@@ -64,7 +64,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Fragment detailFragment = new DetailFragment();
                 TrailerFragment trailerFragment = new TrailerFragment();
-                Toast.makeText(activity, upcoming.getTitle(), Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("title", upcoming.getTitle());
                 bundle.putString("img", upcoming.getPosterPath());

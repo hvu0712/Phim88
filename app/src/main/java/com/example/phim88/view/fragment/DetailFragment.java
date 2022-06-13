@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -50,9 +51,8 @@ public class DetailFragment extends BaseFragment {
         trailerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_trailer, container, false);
 
         new TrailerFragment();
-        myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(),3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(0);
         bundle = new Bundle();
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         fetchDetail();

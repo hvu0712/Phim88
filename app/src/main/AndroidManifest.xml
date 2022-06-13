@@ -4,11 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <queries>
         <intent>
             <action android:name="com.google.android.youtube.api.service.START" />
         </intent>
     </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,7 @@
         android:theme="@style/Theme.Phim88"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Youtube"
+            android:name=".MainActivity2"
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"

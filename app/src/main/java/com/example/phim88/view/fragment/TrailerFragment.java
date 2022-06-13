@@ -51,23 +51,19 @@ public class TrailerFragment extends BaseFragment {
             if (videos.size() > 0 && videos != null) {
                 for (Video video : videos) {
                     if (video.getName().equals("Official Trailer") == true) {
-
                         a = video.getKey();
                         Log.e(TAG, "a: " + a);
-
-
                     }
                 }
-
             }
         });
-       binding.videoViewTrailer.initialize(new AbstractYouTubePlayerListener() {
-           @Override
-           public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-               super.onReady(youTubePlayer);
-               youTubePlayer.loadVideo(a, 0f);
-           }
-       });
+        binding.videoViewTrailer.initialize(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                youTubePlayer.loadVideo(a, 0f);
+            }
+        });
         Log.e(TAG, "a1: " + a);
         getParentFragmentManager().setFragmentResultListener("dataFromDetail", this, new FragmentResultListener() {
             @Override
