@@ -12,6 +12,7 @@ import com.example.phim88.model.Video.VideoResponse;
 import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.genre.GenreResponse;
 import com.example.phim88.model.popular.PopularResponse;
+import com.example.phim88.model.search.SearchResponse;
 import com.example.phim88.model.upcoming.UpcomingResponse;
 import com.example.phim88.util.Const;
 import com.example.phim88.view.fragment.DetailFragment;
@@ -99,15 +100,15 @@ public class Repository {
     }
 
     public void callSearch(RequestCallback callback, String query) {
-        Call<PopularResponse> call = searchApi.getSearch(Const.info.key, Const.info.language, query, 1, false);
-        call.enqueue(new Callback<PopularResponse>() {
+        Call<SearchResponse> call = searchApi.getSearch(Const.info.key, Const.info.language, query, 1, false);
+        call.enqueue(new Callback<SearchResponse>() {
             @Override
-            public void onResponse(Call<PopularResponse> call, Response<PopularResponse> response) {
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 callback.success(response.body());
             }
 
             @Override
-            public void onFailure(Call<PopularResponse> call, Throwable t) {
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
                 callback.fail(t.getMessage());
             }
         });

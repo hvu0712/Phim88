@@ -32,7 +32,7 @@ public class TrailerFragment extends BaseFragment {
     public int data;
     private FragmentTrailerBinding binding;
     private VideoViewModel videoViewModel;
-    private String a;
+    private static String a;
     private int id;
 
 

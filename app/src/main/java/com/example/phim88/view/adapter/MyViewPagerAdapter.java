@@ -1,6 +1,7 @@
 package com.example.phim88.view.adapter;
 
 import android.os.Parcelable;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import com.example.phim88.view.fragment.CatsFragment;
 import com.example.phim88.view.fragment.ProducerFragment;
 import com.example.phim88.view.fragment.TrailerFragment;
 
-public class MyViewPagerAdapter extends FragmentPagerAdapter {
+public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
 
 
@@ -44,6 +45,10 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
     }
 
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+
+    }
 
     @Override
     public int getCount() {

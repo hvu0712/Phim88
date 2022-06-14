@@ -53,6 +53,7 @@ public class DetailFragment extends BaseFragment {
         new TrailerFragment();
         myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(),3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(3);
         bundle = new Bundle();
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         fetchDetail();
