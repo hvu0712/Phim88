@@ -2,9 +2,11 @@ package com.example.phim88.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private static final String TAG = "CategoryAdapter";
     private final List<Category> mList;
     private MovieAdapter movieAdapter;
+
 
     public CategoryAdapter() {
         mList = new ArrayList<>();
@@ -62,33 +65,53 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         holder.binding.tvGenre.setText(category.getNameCategory());
 
-        holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(holder.binding.getRoot().getContext(), DetailFragment.class);
-            }
-        });
 
         holder.binding.rcvMovie.setLayoutManager(holder.staggeredGridLayoutManager);
 
         holder.binding.rcvMovie.setAdapter(holder.concatAdapter);
 
-        holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MorePopularFragment morePopularFragment = new MorePopularFragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out)
-                        .replace(R.id.fragment_container, morePopularFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+
+        if (position == 0){
+            holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MorePopularFragment morePopularFragment = new MorePopularFragment();
+                    morePopularFragment.setArguments(bundle);
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in,
+                                    R.anim.fade_out,
+                                    R.anim.fade_in,
+                                    R.anim.slide_out)
+                            .replace(R.id.fragment_container, morePopularFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
+        } else if (position == 1){
+            holder.binding.btnMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MorePopularFragment morePopularFragment = new MorePopularFragment();
+                    morePopularFragment.setArguments(bundle);
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in,
+                                    R.anim.fade_out,
+                                    R.anim.fade_in,
+                                    R.anim.slide_out)
+                            .replace(R.id.fragment_container, morePopularFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
+        }
+
+
 
     }
 
