@@ -2,6 +2,7 @@ package com.example.phim88.control;
 
 import android.content.Context;
 
+import com.example.phim88.control.api.CreditsApi;
 import com.example.phim88.control.api.DetailApi;
 import com.example.phim88.control.api.GenresApi;
 import com.example.phim88.control.api.PopularApi;
@@ -9,6 +10,7 @@ import com.example.phim88.control.api.SearchApi;
 import com.example.phim88.control.api.UpcomingApi;
 import com.example.phim88.control.api.VideoApi;
 import com.example.phim88.model.Video.VideoResponse;
+import com.example.phim88.model.cast.Credits;
 import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.genre.GenreResponse;
 import com.example.phim88.model.popular.PopularResponse;
@@ -33,6 +35,7 @@ public class Repository {
     private final SearchApi searchApi;
     private final DetailApi detailApi;
     private final VideoApi videoApi;
+    private final CreditsApi creditsApi;
     private final Retrofit requestTheMovieDb;
     private DetailFragment detailFragment;
     private Context context;
@@ -52,6 +55,7 @@ public class Repository {
         searchApi = requestTheMovieDb.create(SearchApi.class);
         detailApi = requestTheMovieDb.create(DetailApi.class);
         videoApi = requestTheMovieDb.create(VideoApi.class);
+        creditsApi = requestTheMovieDb.create(CreditsApi.class);
     }
 
     public void callApi(RequestCallback callback) {
@@ -141,6 +145,21 @@ public class Repository {
 
             @Override
             public void onFailure(Call<VideoResponse> call, Throwable t) {
+                callback.fail(t.getMessage());
+            }
+        });
+    }
+
+    public void callCredits(RequestCallback callback, int movie_id){
+        Call<Credits> call = creditsApi.getCredits(movie_id, Const.info.key, Const.info.language);
+        call.enqueue(new Callback<Credits>() {
+            @Override
+            public void onResponse(Call<Credits> call, Response<Credits> response) {
+                callback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Credits> call, Throwable t) {
                 callback.fail(t.getMessage());
             }
         });

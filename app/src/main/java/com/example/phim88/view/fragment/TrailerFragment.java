@@ -50,9 +50,12 @@ public class TrailerFragment extends BaseFragment {
         videoViewModel.getListVideo().observe(getViewLifecycleOwner(), videos -> {
             if (videos.size() > 0 && videos != null) {
                 for (Video video : videos) {
-                    if (video.getName().equals("Official Trailer") == true) {
+                    Log.e(TAG, "a: " + video.getKey());
+                    if (video.getName().equals("Official Trailer")) {
                         a = video.getKey();
                         Log.e(TAG, "a: " + a);
+                    } else {
+                        a = video.getKey();
                     }
                 }
             }

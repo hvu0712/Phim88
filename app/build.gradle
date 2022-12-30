@@ -118,13 +118,15 @@ dependencies {
 
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
 
-    //thu vien circleindicator
+    //circleindicator
     implementation 'me.relex:circleindicator:2.1.6'
 
-    // thu vien glide
+    //glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
 
     implementation("androidx.cardview:cardview:1.0.0")
+
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
 
 
 }

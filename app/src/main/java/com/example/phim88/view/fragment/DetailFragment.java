@@ -8,18 +8,24 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.phim88.R;
+import com.example.phim88.databinding.FragmentCastsBinding;
 import com.example.phim88.databinding.FragmentDetailBinding;
 import com.example.phim88.databinding.FragmentTrailerBinding;
 import com.example.phim88.model.Video.Video;
+import com.example.phim88.model.cast.Cast;
 import com.example.phim88.model.detail.Genre;
+import com.example.phim88.view.activity.MainActivity;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
+import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.DetailViewModel;
 import com.example.phim88.viewmodel.VideoViewModel;
 
@@ -40,7 +46,10 @@ public class DetailFragment extends BaseFragment {
     private FragmentDetailBinding binding;
     private DetailViewModel detailViewModel;
     private FragmentTrailerBinding trailerBinding;
-    private Callback callback;
+
+
+    private CreditsViewModel creditsViewModel;
+    public int data;
 
 
     @Nullable
@@ -58,6 +67,34 @@ public class DetailFragment extends BaseFragment {
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         fetchDetail();
         fetchVideo();
+
+        creditsViewModel = new ViewModelProvider(this).get(CreditsViewModel.class);
+        creditsViewModel.getListCast().observe(getViewLifecycleOwner(), casts -> {
+            if (casts.size() > 0 && casts != null){
+                for (Cast cast : casts){
+                    Log.e(TAG, "onCreateView123: "+ cast.getName());
+                }
+            }
+        });
+
+        getParentFragmentManager().setFragmentResultListener("dataFromDetail", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                data = result.getInt("idFromDetail");
+                if (data != 0) {
+                    creditsViewModel.requestCast(data);
+                }
+                Log.e(TAG, "onFragmentResult: " + data);
+            }
+        });
+
+        binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.onBackPressed();
+            }
+        });
 
         Log.e(TAG, "onCreateView: " + movie_id);
         return binding.getRoot();
@@ -85,9 +122,11 @@ public class DetailFragment extends BaseFragment {
 //        popularViewModel.requestPopular();
         Glide.with(this)
                 .load(img_base + img)
+                .centerCrop()
                 .into(binding.imageView2);
         Glide.with(this)
                 .load(img_base + backdrop)
+                .centerCrop()
                 .into(binding.imgBackdrop);
         binding.tvLike.setText(Math.round(voteCount) + "%");
         binding.tvMovieName.setText(title);
@@ -137,37 +176,4 @@ public class DetailFragment extends BaseFragment {
         videoViewModel.requestVideo(id);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.e(TAG, "onDestroyView: ");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.e(TAG, "onDetach: ");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    public interface Callback {
-        void back();
-    }
 }

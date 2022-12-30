@@ -18,6 +18,10 @@
     <style name="Theme.Phim88.NoActionBar">
         <item name="windowActionBar">false</item>
     </style>
+    
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
 
     <style name="Theme.Phim88.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

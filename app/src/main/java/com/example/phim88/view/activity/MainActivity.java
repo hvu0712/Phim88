@@ -59,7 +59,6 @@ public class MainActivity extends BaseActivity {
         binding.rclv.setLayoutManager(layoutManager);
         binding.rclv.setAdapter(adapter);
 
-
         binding.tvAboutme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +73,8 @@ public class MainActivity extends BaseActivity {
         });
         viewModel.requestGenres();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
