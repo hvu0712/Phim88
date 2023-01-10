@@ -19,8 +19,6 @@ import com.example.phim88.view.fragment.TrailerFragment;
 
 public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
-
-
     public MyViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -40,13 +38,8 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new ProducerFragment();
 
             default:
-                return new TrailerFragment();
+                return null;
         }
-
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
     }
 

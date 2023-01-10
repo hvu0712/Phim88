@@ -27,6 +27,7 @@ import com.example.phim88.view.activity.MainActivity;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
 import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.DetailViewModel;
+import com.example.phim88.viewmodel.SharedViewModel;
 import com.example.phim88.viewmodel.VideoViewModel;
 
 import java.util.ArrayList;
@@ -39,18 +40,21 @@ public class DetailFragment extends BaseFragment {
     private final List<String> genres = new ArrayList<>();
     private final List<Video> listVideo = new ArrayList<>();
     public int movie_id;
-    Bundle bundle;
     private int id;
     private MyViewPagerAdapter myViewPagerAdapter;
     private VideoViewModel videoViewModel;
     private FragmentDetailBinding binding;
     private DetailViewModel detailViewModel;
     private FragmentTrailerBinding trailerBinding;
-
-
+    private SharedViewModel sharedViewModel;
     private CreditsViewModel creditsViewModel;
+
+
     public int data;
 
+    public int getData() {
+        return data;
+    }
 
     @Nullable
     @Override
@@ -59,34 +63,28 @@ public class DetailFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
         trailerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_trailer, container, false);
 
-        new TrailerFragment();
+
+
         myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(),3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
         binding.viewPager.setOffscreenPageLimit(3);
-        bundle = new Bundle();
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+
+        id = getArguments().getInt("id");
+        Log.e(TAG, "fetchVideo: "+id);
+        Bundle bundle = new Bundle();
+        bundle.putInt("idFromDetail", id);
+        getParentFragmentManager().setFragmentResult("dataFromDetail", bundle);
+
+
+//        Log.e(TAG, "12323123123123: "+id);
+
+
+
+
         fetchDetail();
         fetchVideo();
 
-        creditsViewModel = new ViewModelProvider(this).get(CreditsViewModel.class);
-        creditsViewModel.getListCast().observe(getViewLifecycleOwner(), casts -> {
-            if (casts.size() > 0 && casts != null){
-                for (Cast cast : casts){
-                    Log.e(TAG, "onCreateView123: "+ cast.getName());
-                }
-            }
-        });
-
-        getParentFragmentManager().setFragmentResultListener("dataFromDetail", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                data = result.getInt("idFromDetail");
-                if (data != 0) {
-                    creditsViewModel.requestCast(data);
-                }
-                Log.e(TAG, "onFragmentResult: " + data);
-            }
-        });
 
         binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +98,13 @@ public class DetailFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        Log.e(TAG, "123231231231231111: "+id);
+        sharedViewModel.setData(id);
+    }
 
     public void fetchDetail() {
         String backdrop = getArguments().getString("backdrop");
@@ -149,7 +154,7 @@ public class DetailFragment extends BaseFragment {
     }
 
     public void fetchVideo() {
-        id = getArguments().getInt("id");
+
 //        bundle.putInt("idFromDetail", id);
 //        TrailerFragment trailerFragment = new TrailerFragment();
 //        trailerFragment.setArguments(bundle);
@@ -157,17 +162,14 @@ public class DetailFragment extends BaseFragment {
 //                .beginTransaction()
 //                .replace(R.id.fragment_container, trailerFragment)
 //                .commit();
-        Log.e(TAG, "fetchVideo: " + id);
-        Bundle bundle = new Bundle();
-        bundle.putInt("idFromDetail", id);
-        getParentFragmentManager().setFragmentResult("dataFromDetail", bundle);
+
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
-        videoViewModel.setId(id);
+//        videoViewModel.setId(id);
         videoViewModel.getListVideo().observe(getViewLifecycleOwner(), videos -> {
-            if (videos.size() > 0 && videos != null) {
-                for (Video video : videos) {
-                    if (video.getName().equals("Official Trailer") == true) {
+            if (videos.size() > 0 && videos != null){
+                for (Video video : videos){
+                    if (video.getName().equals("Official Trailer") == true){
                         listVideo.add(new Video(video.getKey()));
                     }
                 }

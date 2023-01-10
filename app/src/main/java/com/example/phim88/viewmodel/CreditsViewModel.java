@@ -20,6 +20,10 @@ public class CreditsViewModel extends BaseViewModel{
         super(application);
     }
 
+    public void setId(Integer data) {
+        id.postValue(data);
+    }
+
     public MutableLiveData<List<Cast>> getListCast() {
         if (listCast == null){
             listCast = new MutableLiveData<>();

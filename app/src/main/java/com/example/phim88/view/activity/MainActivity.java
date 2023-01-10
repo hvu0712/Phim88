@@ -25,6 +25,7 @@ import com.example.phim88.view.adapter.GenresAdapter;
 import com.example.phim88.view.fragment.DetailFragment;
 import com.example.phim88.view.fragment.SearchFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
+import com.example.phim88.viewmodel.SharedViewModel;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity {
     private int height = 0;
     private int viewHeight;
     private ValueAnimator animator;
+    private SharedViewModel sharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class MainActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         DetailFragment detailFragment = new DetailFragment();
-
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         setSupportActionBar(binding.toolBar);
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

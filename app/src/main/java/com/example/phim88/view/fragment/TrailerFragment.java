@@ -13,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentTrailerBinding;
 import com.example.phim88.model.Video.Video;
+import com.example.phim88.viewmodel.SharedViewModel;
 import com.example.phim88.viewmodel.VideoViewModel;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -33,13 +35,22 @@ public class TrailerFragment extends BaseFragment {
     private FragmentTrailerBinding binding;
     private VideoViewModel videoViewModel;
     private static String a;
-    private int id;
+    private SharedViewModel sharedViewModel;
 
-
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("dataFromDetail", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                data = result.getInt("idFromDetail");
+                if (data != 0) {
+                    videoViewModel.requestVideo(data);
+                }
+                Log.e(TAG, "onFragmentResult: " + data);
+            }
+        });
     }
-
 
     @Nullable
     @Override
@@ -64,64 +75,14 @@ public class TrailerFragment extends BaseFragment {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                 super.onReady(youTubePlayer);
+                Log.e(TAG, "onReady: "+a);
                 youTubePlayer.loadVideo(a, 0f);
             }
         });
-        Log.e(TAG, "a1: " + a);
-        getParentFragmentManager().setFragmentResultListener("dataFromDetail", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                data = result.getInt("idFromDetail");
-                if (data != 0) {
-                    videoViewModel.requestVideo(data);
-                }
-                Log.e(TAG, "onFragmentResult: " + data);
-            }
-        });
+        Log.e(TAG, "trailerFragment: " + a);
+
 
         return binding.getRoot();
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.e(TAG, "onDestroyView: ");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.e(TAG, "onDetach: ");
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.e(TAG, "onAttach: ");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.e(TAG, "onCreate: ");
-    }
 }
