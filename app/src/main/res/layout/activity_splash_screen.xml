@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/baloo"
-                android:text="H"
+                android:text="V"
                 android:textColor="@color/white"
                 android:textSize="150sp" />
 

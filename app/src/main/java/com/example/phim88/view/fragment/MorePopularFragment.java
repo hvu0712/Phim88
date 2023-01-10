@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -52,10 +53,16 @@ public class MorePopularFragment extends BaseFragment {
 
         popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
         upcomingViewModel = new ViewModelProvider(this).get(UpcomingViewModel.class);
-
+        binding.tvTitle.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
+                activity.onBackPressed();
+            }
+        });
 
         if (bundle.getInt("position") == 0){
-            binding.tvTitle.setText("Popular");
+            binding.tvTitle.setTitle("Popular");
             popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
                 if (populars != null && populars.size() > 0) {
                     for (Popular popular : populars) {
@@ -77,7 +84,7 @@ public class MorePopularFragment extends BaseFragment {
             });
             popularViewModel.requestPopular();
         } else if (bundle.getInt("position") == 1){
-            binding.tvTitle.setText("Upcoming");
+            binding.tvTitle.setTitle("Upcoming");
             upcomingViewModel.getListUpcoming().observe(getViewLifecycleOwner(), upcomings -> {
                 if (upcomings != null && upcomings.size() > 0){
                     for (Upcoming upcoming : upcomings){
