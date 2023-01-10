@@ -14,7 +14,7 @@ public class UpcomingResponse {
     public Integer page;
     @SerializedName("results")
     @Expose
-    public List<Result> results = null;
+    public List<Upcoming> results = null;
     @SerializedName("total_pages")
     @Expose
     public Integer totalPages;
@@ -38,11 +38,11 @@ public class UpcomingResponse {
         this.page = page;
     }
 
-    public List<Result> getResults() {
+    public List<Upcoming> getResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<Upcoming> results) {
         this.results = results;
     }
 

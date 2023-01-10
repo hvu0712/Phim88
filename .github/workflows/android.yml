@@ -4,7 +4,7 @@ on:
   push:
     branches: [ VuPham ]
   pull_request:
-    branches: [ VuPham ]
+    branches: [ Huy ]
 
 jobs:
   build:

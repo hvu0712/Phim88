@@ -18,6 +18,10 @@
     <style name="Theme.Phim88.NoActionBar">
         <item name="windowActionBar">true</item>
     </style>
+    
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
 
     <style name="Theme.Phim88.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -27,5 +31,7 @@
         <item name="android:editTextColor">@color/black</item>
         <!-- Hint text color -->
         <item name="android:textColorHint">@color/black</item>
+
     </style>
+
 </resources>

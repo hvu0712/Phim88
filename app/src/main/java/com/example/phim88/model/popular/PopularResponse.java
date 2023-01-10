@@ -11,7 +11,7 @@ public class PopularResponse {
     private Integer page;
     @SerializedName("results")
     @Expose
-    private List<Popular> results = null;
+    private List<Popular> results;
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
