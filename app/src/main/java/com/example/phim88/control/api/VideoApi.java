@@ -1,6 +1,6 @@
 package com.example.phim88.control.api;
 
-import com.example.phim88.model.Video.VideoResponse;
+import com.example.phim88.model.video.VideoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

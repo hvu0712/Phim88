@@ -10,20 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.phim88.R;
-import com.example.phim88.databinding.FragmentCastsBinding;
 import com.example.phim88.databinding.FragmentDetailBinding;
 import com.example.phim88.databinding.FragmentTrailerBinding;
-import com.example.phim88.model.Video.Video;
-import com.example.phim88.model.cast.Cast;
+import com.example.phim88.model.video.Video;
 import com.example.phim88.model.detail.Genre;
-import com.example.phim88.view.activity.MainActivity;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
 import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.DetailViewModel;
@@ -45,7 +39,6 @@ public class DetailFragment extends BaseFragment {
     private VideoViewModel videoViewModel;
     private FragmentDetailBinding binding;
     private DetailViewModel detailViewModel;
-    private FragmentTrailerBinding trailerBinding;
     private SharedViewModel sharedViewModel;
     private CreditsViewModel creditsViewModel;
 
@@ -61,14 +54,15 @@ public class DetailFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
-        trailerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_trailer, container, false);
+
 
 
 
         myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(),3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(3);
+//        binding.viewPager.setOffscreenPageLimit(3);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+        myViewPagerAdapter.notifyDataSetChanged();
 
         id = getArguments().getInt("id");
         Log.e(TAG, "fetchVideo: "+id);
@@ -77,13 +71,12 @@ public class DetailFragment extends BaseFragment {
         getParentFragmentManager().setFragmentResult("dataFromDetail", bundle);
 
 
-//        Log.e(TAG, "12323123123123: "+id);
 
 
 
 
         fetchDetail();
-        fetchVideo();
+//        fetchVideo();
 
 
         binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -135,7 +128,6 @@ public class DetailFragment extends BaseFragment {
                 .into(binding.imgBackdrop);
         binding.tvLike.setText(Math.round(voteCount) + "%");
         binding.tvMovieName.setText(title);
-//        binding.tvOverview.setText(overview);
         detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
         detailViewModel.getListGenre().observe(getViewLifecycleOwner(), genres1 -> {
             if (genres1.size() > 0 && genres1 != null) {
@@ -153,29 +145,29 @@ public class DetailFragment extends BaseFragment {
         detailViewModel.RequestListDetail(id);
     }
 
-    public void fetchVideo() {
-
-//        bundle.putInt("idFromDetail", id);
-//        TrailerFragment trailerFragment = new TrailerFragment();
-//        trailerFragment.setArguments(bundle);
-//        getFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fragment_container, trailerFragment)
-//                .commit();
-
-
-        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
-//        videoViewModel.setId(id);
-        videoViewModel.getListVideo().observe(getViewLifecycleOwner(), videos -> {
-            if (videos.size() > 0 && videos != null){
-                for (Video video : videos){
-                    if (video.getName().equals("Official Trailer") == true){
-                        listVideo.add(new Video(video.getKey()));
-                    }
-                }
-            }
-        });
-        videoViewModel.requestVideo(id);
-    }
+//    public void fetchVideo() {
+//
+////        bundle.putInt("idFromDetail", id);
+////        TrailerFragment trailerFragment = new TrailerFragment();
+////        trailerFragment.setArguments(bundle);
+////        getFragmentManager()
+////                .beginTransaction()
+////                .replace(R.id.fragment_container, trailerFragment)
+////                .commit();
+//
+//
+//        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+////        videoViewModel.setId(id);
+//        videoViewModel.getListVideo().observe(getViewLifecycleOwner(), videos -> {
+//            if (videos.size() > 0 && videos != null){
+//                for (Video video : videos){
+//                    if (video.getName().equals("Official Trailer") == true){
+//                        listVideo.add(new Video(video.getKey()));
+//                    }
+//                }
+//            }
+//        });
+//        videoViewModel.requestVideo(id);
+//    }
 
 }

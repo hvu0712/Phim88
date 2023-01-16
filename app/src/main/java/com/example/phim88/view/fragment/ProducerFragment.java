@@ -10,12 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.phim88.R;
+import com.example.phim88.databinding.FragmentProducerBinding;
 
 public class ProducerFragment extends Fragment {
+
+    private FragmentProducerBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_producer, container, false);
+        binding = FragmentProducerBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }

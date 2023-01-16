@@ -65,7 +65,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         holder.binding.tvGenre.setText(category.getNameCategory());
 
-
         holder.binding.rcvMovie.setLayoutManager(holder.staggeredGridLayoutManager);
 
         holder.binding.rcvMovie.setAdapter(holder.concatAdapter);
@@ -110,8 +109,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 }
             });
         }
-
-
 
     }
 

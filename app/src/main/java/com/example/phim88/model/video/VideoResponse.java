@@ -1,4 +1,4 @@
-package com.example.phim88.model.Video;
+package com.example.phim88.model.video;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

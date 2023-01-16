@@ -48,6 +48,10 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
         return 3;
     }
 
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
+    }
 
     @Nullable
     @Override

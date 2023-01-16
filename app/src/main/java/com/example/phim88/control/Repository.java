@@ -9,7 +9,7 @@ import com.example.phim88.control.api.PopularApi;
 import com.example.phim88.control.api.SearchApi;
 import com.example.phim88.control.api.UpcomingApi;
 import com.example.phim88.control.api.VideoApi;
-import com.example.phim88.model.Video.VideoResponse;
+import com.example.phim88.model.video.VideoResponse;
 import com.example.phim88.model.cast.Credits;
 import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.genre.GenreResponse;

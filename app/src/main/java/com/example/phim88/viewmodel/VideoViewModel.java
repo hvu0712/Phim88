@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.phim88.control.Repository;
-import com.example.phim88.model.Video.Video;
-import com.example.phim88.model.Video.VideoResponse;
+import com.example.phim88.model.video.Video;
+import com.example.phim88.model.video.VideoResponse;
 
 import java.util.ArrayList;
 import java.util.List;

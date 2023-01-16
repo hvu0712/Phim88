@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.phim88.control.Repository;
-import com.example.phim88.model.Video.Video;
 import com.example.phim88.model.cast.Cast;
 import com.example.phim88.model.cast.Credits;
 
