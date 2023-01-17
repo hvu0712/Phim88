@@ -15,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentDetailBinding;
-import com.example.phim88.databinding.FragmentTrailerBinding;
-import com.example.phim88.model.video.Video;
 import com.example.phim88.model.detail.Genre;
+import com.example.phim88.model.detail.ProductionCompany;
+import com.example.phim88.model.video.Video;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
 import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.DetailViewModel;
@@ -56,27 +56,22 @@ public class DetailFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
 
 
-
-
-        myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(),3);
+        myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(), 3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
-//        binding.viewPager.setOffscreenPageLimit(3);
+        binding.viewPager.setOffscreenPageLimit(3);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         myViewPagerAdapter.notifyDataSetChanged();
 
         id = getArguments().getInt("id");
-        Log.e(TAG, "fetchVideo: "+id);
+        Log.e(TAG, "fetchVideo: " + id);
         Bundle bundle = new Bundle();
         bundle.putInt("idFromDetail", id);
         getParentFragmentManager().setFragmentResult("dataFromDetail", bundle);
 
 
-
-
-
-
         fetchDetail();
 //        fetchVideo();
+//        fetchData();
 
 
         binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -95,7 +90,7 @@ public class DetailFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        Log.e(TAG, "123231231231231111: "+id);
+        Log.e(TAG, "123231231231231111: " + id);
         sharedViewModel.setData(id);
     }
 
@@ -145,7 +140,7 @@ public class DetailFragment extends BaseFragment {
         detailViewModel.RequestListDetail(id);
     }
 
-//    public void fetchVideo() {
+    //    public void fetchVideo() {
 //
 ////        bundle.putInt("idFromDetail", id);
 ////        TrailerFragment trailerFragment = new TrailerFragment();
@@ -169,5 +164,17 @@ public class DetailFragment extends BaseFragment {
 //        });
 //        videoViewModel.requestVideo(id);
 //    }
+    private List<ProductionCompany> productionCompanyList = new ArrayList<>();
 
+    private void fetchData() {
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+        detailViewModel.getListProductionCompany().observe(getViewLifecycleOwner(), productionCompanies -> {
+            productionCompanyList.addAll(productionCompanies);
+             Log.e("TAG", "fetchData: " + productionCompanies);
+        });
+        sharedViewModel.getmData().observe(getViewLifecycleOwner(), integer -> {
+            detailViewModel.RequestListDetail(integer);
+        });
+    }
 }

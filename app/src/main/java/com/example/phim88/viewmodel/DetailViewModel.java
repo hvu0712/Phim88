@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.phim88.control.Repository;
 import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.detail.Genre;
+import com.example.phim88.model.detail.ProductionCompany;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class DetailViewModel extends BaseViewModel {
     private static final String TAG = "DetailViewModel";
     private MutableLiveData<List<Genre>> listGenre;
     private MutableLiveData<String> listDetail;
+    private MutableLiveData<List<ProductionCompany>> listProductionCompany;
 
     public DetailViewModel(@NonNull Application application) {
         super(application);
@@ -31,6 +33,13 @@ public class DetailViewModel extends BaseViewModel {
         return listGenre;
     }
 
+    public MutableLiveData<List<ProductionCompany>> getListProductionCompany() {
+        if (listProductionCompany == null) {
+            listProductionCompany = new MutableLiveData<>();
+            listProductionCompany.setValue(new ArrayList<>());
+        }
+        return listProductionCompany;
+    }
     public MutableLiveData<String> getListDetail() {
         if (listDetail == null) {
             listDetail = new MutableLiveData<>();
@@ -43,10 +52,17 @@ public class DetailViewModel extends BaseViewModel {
             @Override
             public void success(Object object) {
                 if (object != null && object instanceof Detail) {
-                    List<Genre> genreList = ((Detail) object).getGenres();
-                    String detailList = ((Detail) object).getOverview();
-                    DetailViewModel.this.listGenre.postValue(genreList);
-                    DetailViewModel.this.listDetail.postValue(detailList);
+                    try{
+                        List<Genre> genreList = ((Detail) object).getGenres();
+                        String detailList = ((Detail) object).getOverview();
+                        List<ProductionCompany> productionCompanies = ((Detail) object).getProductionCompanies();
+                        DetailViewModel.this.listGenre.postValue(genreList);
+                        DetailViewModel.this.listDetail.postValue(detailList);
+                        DetailViewModel.this.listProductionCompany.postValue(productionCompanies);
+                    } catch (Exception e){
+
+                    }
+
                 }
             }
 

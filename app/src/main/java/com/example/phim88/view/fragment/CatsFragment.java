@@ -12,10 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentCastsBinding;
 import com.example.phim88.model.cast.Cast;
+import com.example.phim88.view.adapter.CastAdapter;
 import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.SharedViewModel;
 
@@ -27,19 +29,26 @@ public class CatsFragment extends Fragment {
     public int data;
     private DetailFragment detailFragment;
     private SharedViewModel sharedViewModel;
-
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private CastAdapter castAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentCastsBinding.inflate(inflater, container, false);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        castAdapter = new CastAdapter(getContext());
 
         creditsViewModel = new ViewModelProvider(this).get(CreditsViewModel.class);
         creditsViewModel.getListCast().observe(getViewLifecycleOwner(), casts -> {
             if (casts.size() > 0 && casts != null){
                 for (Cast cast : casts){
-                    Log.e(TAG, "onCreateView123: "+ cast.getName());
+                    Log.e(TAG, "onCreateView123: "+ cast.getName()+ cast.getProfilePath());
                 }
+                binding.rcvCast.setLayoutManager(staggeredGridLayoutManager);
+                castAdapter.setCasts(casts);
+                binding.rcvCast.setAdapter(castAdapter);
+                castAdapter.notifyDataSetChanged();
             }
         });
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
