@@ -37,7 +37,7 @@ public class ProducerAdapter extends RecyclerView.Adapter<ProducerAdapter.Produc
 
     @Override
     public void onBindViewHolder(@NonNull ProducerViewHolder holder, int position) {
-        String img_base = "https://image.tmdb.org/t/p/w500/";
+        String img_base = "https://image.tmdb.org/t/p/original/";
         ProductionCompany productionCompany = productionCompanyList.get(position);
         Glide.with(context)
                 .load(img_base+productionCompany.getLogoPath())

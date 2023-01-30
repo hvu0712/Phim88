@@ -58,7 +58,7 @@ public class DetailFragment extends BaseFragment {
 
         myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(), 3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(3);
+//        binding.viewPager.setOffscreenPageLimit(3);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         myViewPagerAdapter.notifyDataSetChanged();
 
@@ -71,7 +71,6 @@ public class DetailFragment extends BaseFragment {
 
         fetchDetail();
 //        fetchVideo();
-//        fetchData();
 
 
         binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -124,19 +123,26 @@ public class DetailFragment extends BaseFragment {
         binding.tvLike.setText(Math.round(voteCount) + "%");
         binding.tvMovieName.setText(title);
         detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
-        detailViewModel.getListGenre().observe(getViewLifecycleOwner(), genres1 -> {
-            if (genres1.size() > 0 && genres1 != null) {
-                for (Genre genre : genres1) {
-                    genres.add(genre.getName());
-                }
-                binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
+//        detailViewModel.getListGenre().observe(getViewLifecycleOwner(), genres1 -> {
+//            if (genres1.size() > 0 && genres1 != null) {
+//                for (Genre genre : genres1) {
+//                    genres.add(genre.getName());
+//                }
+//                binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
+//            }
+//        });
+        detailViewModel.getLiveData().observe(getViewLifecycleOwner(), detail -> {
+            for (Genre genre : detail.getGenres()){
+                genres.add(genre.getName());
             }
+            binding.tvOverview.setText(detail.getOverview());
+            binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
         });
-        detailViewModel.getListDetail().observe(getViewLifecycleOwner(), details -> {
-            if (details != null) {
-                binding.tvOverview.setText(details);
-            }
-        });
+//        detailViewModel.getListDetail().observe(getViewLifecycleOwner(), details -> {
+//            if (details != null) {
+//                binding.tvOverview.setText(details);
+//            }
+//        });
         detailViewModel.RequestListDetail(id);
     }
 
@@ -164,17 +170,4 @@ public class DetailFragment extends BaseFragment {
 //        });
 //        videoViewModel.requestVideo(id);
 //    }
-    private List<ProductionCompany> productionCompanyList = new ArrayList<>();
-
-    private void fetchData() {
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
-        detailViewModel.getListProductionCompany().observe(getViewLifecycleOwner(), productionCompanies -> {
-            productionCompanyList.addAll(productionCompanies);
-             Log.e("TAG", "fetchData: " + productionCompanies);
-        });
-        sharedViewModel.getmData().observe(getViewLifecycleOwner(), integer -> {
-            detailViewModel.RequestListDetail(integer);
-        });
-    }
 }
