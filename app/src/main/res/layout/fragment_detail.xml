@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <ScrollView
+        android:id="@+id/fr_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +49,7 @@
                 android:src="@drawable/demo1" />
 
         </androidx.cardview.widget.CardView>
-        //
+
 
 
         <TextView
@@ -212,7 +213,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
-        //
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -229,7 +230,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/_300sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/tab_layout"
             app:layout_constraintRight_toRightOf="@id/tab_layout"

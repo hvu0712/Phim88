@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentTrailerBinding;
 import com.example.phim88.model.video.Video;
@@ -36,7 +38,6 @@ import java.util.List;
 public class TrailerFragment extends BaseFragment {
 
     private static final String TAG = "TrailerFragment";
-    public int data;
     private FragmentTrailerBinding binding;
     private VideoViewModel videoViewModel;
     private static String a;
@@ -55,6 +56,7 @@ public class TrailerFragment extends BaseFragment {
         trailerAdapter = new TrailerAdapter(getContext());
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         binding.rcvTrailer.setLayoutManager(staggeredGridLayoutManager);
+
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         videoViewModel.getListVideo().observe(getViewLifecycleOwner(), videos -> {
@@ -108,7 +110,6 @@ public class TrailerFragment extends BaseFragment {
 //        }, options);
 
 //        binding.videoViewTrailer.toggleFullScreen();
-
 
 
         return binding.getRoot();

@@ -119,7 +119,6 @@ public class Repository {
     }
 
     public void callDetail(RequestCallback callback, int movie_id) {
-        detailFragment = new DetailFragment();
 //        Log.e(TAG, "callDetail: "+detailFragment.getArguments().getInt("id"));
         Call<Detail> call = detailApi.getDetail(movie_id, Const.info.key, Const.info.language);
         call.enqueue(new Callback<Detail>() {

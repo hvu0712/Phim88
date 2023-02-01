@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_detail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#a2878787" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="100dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="36dp"
+                android:background="#00000000"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardview_detail"
+                app:layout_constraintStart_toStartOf="@+id/cardview_detail"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_detail">
+
+                <View
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#a2878787"
+                    android:scaleType="centerCrop" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <View
+                android:id="@+id/tv_movieName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:fontFamily="@font/abril_fatface"
+                android:text="movie name"
+                android:background="#a2878787"
+                android:textSize="@dimen/dp_12"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/baseline_img"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toRightOf="@id/cardView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_detail"
+                app:layout_constraintVertical_bias="0.172" />
+
+            <com.google.android.material.internal.BaselineLayout
+                android:id="@+id/baseline_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/img_tvbox" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:isIndicator="true"
+                android:progressTint="#a2878787"
+                android:stepSize="0.5"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/tv_movieName" />
+
+            <View
+                android:id="@+id/img_like"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="28dp"
+                android:background="#a2878787"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <View
+                android:id="@+id/tv_like"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="8dp"
+                android:background="#a2878787"
+                android:fontFamily="@font/abril_fatface"
+                android:text="96%"
+                android:textColor="#a2878787"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/img_like"
+                app:layout_constraintStart_toStartOf="@+id/img_like"
+                app:layout_constraintTop_toBottomOf="@+id/img_like" />
+
+            <View
+                android:id="@+id/img_tvbox"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="28dp"
+                android:background="#a2878787"
+                app:layout_constraintStart_toEndOf="@+id/img_like"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <View
+                android:id="@+id/tv_tvbox"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="8dp"
+                android:background="#a2878787"
+                android:fontFamily="@font/abril_fatface"
+                android:text="Netflix"
+                android:textColor="#a2878787"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/img_tvbox"
+                app:layout_constraintStart_toStartOf="@+id/img_tvbox"
+                app:layout_constraintTop_toBottomOf="@id/img_tvbox" />
+
+            <View
+                android:id="@+id/img_age"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="28dp"
+                android:background="#a2878787"
+                app:layout_constraintStart_toEndOf="@+id/img_tvbox"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <View
+                android:id="@+id/tv_age"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="8dp"
+                android:background="#a2878787"
+                android:fontFamily="@font/abril_fatface"
+                android:text="TV 16+"
+                android:textColor="#a2878787"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/img_age"
+                app:layout_constraintStart_toStartOf="@+id/img_age"
+                app:layout_constraintTop_toBottomOf="@id/img_age" />
+
+            <View
+                android:id="@+id/img_clock"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="28dp"
+                android:background="#a2878787"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toRightOf="@id/img_age"
+                app:layout_constraintStart_toEndOf="@+id/img_age"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <View
+                android:id="@+id/tv_clock"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="8dp"
+                android:background="#a2878787"
+                android:fontFamily="@font/abril_fatface"
+                android:text="180p"
+                android:textColor="#a2878787"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/img_clock"
+                app:layout_constraintStart_toStartOf="@+id/img_clock"
+                app:layout_constraintTop_toBottomOf="@id/img_clock" />
+
+            <com.google.android.material.internal.BaselineLayout
+                android:id="@+id/baseline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/tv_tvbox" />
+
+            <TextView
+                android:id="@+id/tv_overview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="#a2878787"
+                android:fontFamily="@font/abril_fatface"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/tv_genres"
+                app:layout_constraintLeft_toLeftOf="@id/tv_genres"
+                app:layout_constraintRight_toRightOf="@id/tv_genres"
+                app:layout_constraintTop_toBottomOf="@id/baseline" />
+
+            <TextView
+                android:id="@+id/tv_genres"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:background="#a2878787"
+                android:fontFamily="@font/abril_fatface"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="#a2878787"
+                app:layout_constraintBottom_toTopOf="@id/view_pager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_genres" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/tab_layout"
+                app:layout_constraintRight_toRightOf="@id/tab_layout"
+                app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

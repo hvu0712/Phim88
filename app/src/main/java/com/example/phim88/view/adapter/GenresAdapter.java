@@ -7,10 +7,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.phim88.R;
 import com.example.phim88.databinding.LvItemBinding;
 import com.example.phim88.model.genre.Genre;
+import com.example.phim88.view.fragment.MorePopularFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +54,17 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), item.getName(), Toast.LENGTH_SHORT).show();
+                MorePopularFragment morePopularFragment = new MorePopularFragment();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in,
+                                R.anim.fade_out,
+                                R.anim.fade_in,
+                                R.anim.slide_out)
+                        .replace(R.id.fragment_container, morePopularFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }

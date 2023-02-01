@@ -3,6 +3,7 @@ package com.example.phim88.view.fragment;
 import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.phim88.R;
 import com.example.phim88.databinding.MorePopularFragmentBinding;
 import com.example.phim88.model.popular.Popular;
@@ -37,6 +40,7 @@ public class MorePopularFragment extends BaseFragment {
     private int position;
     public static int p;
     private Bundle bundle;
+    private SkeletonScreen skeletonScreen;
 
 
     @Nullable
@@ -45,7 +49,8 @@ public class MorePopularFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.more_popular_fragment, container, false);
         bundle = getArguments();
 
-        Log.e(TAG, "onCreateView1: "+bundle.getInt("position"));
+
+        Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
 
         position = bundle.getInt("position");
 
@@ -61,7 +66,7 @@ public class MorePopularFragment extends BaseFragment {
             }
         });
 
-        if (bundle.getInt("position") == 0){
+        if (bundle.getInt("position") == 0) {
             binding.tvTitle.setTitle("Popular");
             popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
                 if (populars != null && populars.size() > 0) {
@@ -80,20 +85,32 @@ public class MorePopularFragment extends BaseFragment {
                 Log.e("TAG", "onCreateView: " + movieListPopular.size());
                 Log.e("TAG", "onCreateView: " + movieAdapter.getItemCount());
                 binding.rclvPopular.setAdapter(movieAdapter);
-
+                skeletonScreen = Skeleton.bind(binding.rclvPopular)
+                        .adapter(movieAdapter)
+                        .load(R.layout.more_item_skeleton)
+                        .duration(500)
+                        .angle(0)
+                        .show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        skeletonScreen.hide();
+                    }
+                }, 1000);
             });
             popularViewModel.requestPopular();
-        } else if (bundle.getInt("position") == 1){
+        } else if (bundle.getInt("position") == 1) {
             binding.tvTitle.setTitle("Upcoming");
             upcomingViewModel.getListUpcoming().observe(getViewLifecycleOwner(), upcomings -> {
-                if (upcomings != null && upcomings.size() > 0){
-                    for (Upcoming upcoming : upcomings){
+                if (upcomings != null && upcomings.size() > 0) {
+                    for (Upcoming upcoming : upcomings) {
                         movieListUpcoming.add(new Upcoming(upcoming.getAdult(), upcoming.getId(), upcoming.getOverview(), upcoming.getPosterPath(), upcoming.getTitle(), upcoming.getVoteAverage(), upcoming.getBackdropPath()));
                     }
                 }
                 movieAdapter = new MovieAdapter(getContext());
 
-                if (movieListUpcoming != null && movieListUpcoming.size() > 0){
+                if (movieListUpcoming != null && movieListUpcoming.size() > 0) {
                     movieAdapter.setDataUpcoming(movieListUpcoming);
                 }
 
@@ -102,6 +119,20 @@ public class MorePopularFragment extends BaseFragment {
                 Log.e("TAG", "onCreateView: " + movieListUpcoming.size());
                 Log.e("TAG", "onCreateView: " + movieAdapter.getItemCount());
                 binding.rclvPopular.setAdapter(movieAdapter);
+                skeletonScreen = Skeleton.bind(binding.rclvPopular)
+                        .adapter(movieAdapter).count(10)
+                        .load(R.layout.more_item_skeleton)
+                        .duration(500)
+                        .angle(0)
+                        .show();
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        skeletonScreen.hide();
+                    }
+                }, 1000);
             });
             upcomingViewModel.RequestUpcoming();
         }
@@ -115,7 +146,7 @@ public class MorePopularFragment extends BaseFragment {
         super.onResume();
         bundle = getArguments();
 
-        Log.e(TAG, "onCreateView1: "+bundle.getInt("position"));
+        Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
 
         position = bundle.getInt("position");
     }
@@ -125,7 +156,7 @@ public class MorePopularFragment extends BaseFragment {
         super.onStart();
         bundle = getArguments();
 
-        Log.e(TAG, "onCreateView1: "+bundle.getInt("position"));
+        Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
 
         position = bundle.getInt("position");
 
@@ -136,7 +167,7 @@ public class MorePopularFragment extends BaseFragment {
         super.onStop();
         bundle = getArguments();
 
-        Log.e(TAG, "onCreateView1: "+bundle.getInt("position"));
+        Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
 
         position = bundle.getInt("position");
 
@@ -147,7 +178,7 @@ public class MorePopularFragment extends BaseFragment {
         super.onPause();
         bundle = getArguments();
 
-        Log.e(TAG, "onCreateView1: "+bundle.getInt("position"));
+        Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
 
         position = bundle.getInt("position");
 

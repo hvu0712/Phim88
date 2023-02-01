@@ -1,10 +1,12 @@
 package com.example.phim88.view.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +15,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentDetailBinding;
 import com.example.phim88.model.detail.Genre;
-import com.example.phim88.model.detail.ProductionCompany;
 import com.example.phim88.model.video.Video;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
 import com.example.phim88.viewmodel.CreditsViewModel;
@@ -26,28 +29,24 @@ import com.example.phim88.viewmodel.VideoViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class DetailFragment extends BaseFragment {
 
     private static final String TAG = "DetailFragment";
     private final List<String> genres = new ArrayList<>();
-    private final List<Video> listVideo = new ArrayList<>();
     public int movie_id;
     private int id;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private VideoViewModel videoViewModel;
     private FragmentDetailBinding binding;
     private DetailViewModel detailViewModel;
     private SharedViewModel sharedViewModel;
-    private CreditsViewModel creditsViewModel;
-
-
-    public int data;
-
-    public int getData() {
-        return data;
-    }
+    private SkeletonScreen skeletonScreen;
+    private Executor executor;
+    private ExecutorService executorService;
 
     @Nullable
     @Override
@@ -55,12 +54,25 @@ public class DetailFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
 
-
         myViewPagerAdapter = new MyViewPagerAdapter(getActivity().getSupportFragmentManager(), 3);
         binding.viewPager.setAdapter(myViewPagerAdapter);
 //        binding.viewPager.setOffscreenPageLimit(3);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         myViewPagerAdapter.notifyDataSetChanged();
+        executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        executorService = Executors.newFixedThreadPool(4);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
 
         id = getArguments().getInt("id");
         Log.e(TAG, "fetchVideo: " + id);
@@ -70,7 +82,6 @@ public class DetailFragment extends BaseFragment {
 
 
         fetchDetail();
-//        fetchVideo();
 
 
         binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -82,18 +93,39 @@ public class DetailFragment extends BaseFragment {
         });
 
         Log.e(TAG, "onCreateView: " + movie_id);
+        skeletonScreen = Skeleton.bind(binding.frDetail)
+                .load(R.layout.tv_overview_item)
+                .duration(500)
+                .angle(0)
+                .show();
+//        skeletonScreen1 = Skeleton.bind(binding.tvGenres)
+//                .load(R.layout.tv_overview_item)
+//                .show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                skeletonScreen.hide();
+//                skeletonScreen1.hide();
+            }
+        },1000);
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+//        Log.e(TAG, "123231231231231111: " + id);
+//        sharedViewModel.setData(id);
+//    }
+
+    public void fetchDetail() {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Log.e(TAG, "123231231231231111: " + id);
         sharedViewModel.setData(id);
-    }
-
-    public void fetchDetail() {
+        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+        detailViewModel.RequestListDetail(id);
         String backdrop = getArguments().getString("backdrop");
         String img = getArguments().getString("img");
         String title = getArguments().getString("title");
@@ -109,6 +141,7 @@ public class DetailFragment extends BaseFragment {
         int genreIds = getArguments().getInt("genreIds");
         Log.e(TAG, "fetchImg: " + genreIds);
         int id = getArguments().getInt("id");
+
         binding.ratingBar.setRating(getArguments().getFloat("voteAverage") / 2);
 
 //        popularViewModel.requestPopular();
@@ -122,7 +155,7 @@ public class DetailFragment extends BaseFragment {
                 .into(binding.imgBackdrop);
         binding.tvLike.setText(Math.round(voteCount) + "%");
         binding.tvMovieName.setText(title);
-        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+
 //        detailViewModel.getListGenre().observe(getViewLifecycleOwner(), genres1 -> {
 //            if (genres1.size() > 0 && genres1 != null) {
 //                for (Genre genre : genres1) {
@@ -131,43 +164,15 @@ public class DetailFragment extends BaseFragment {
 //                binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
 //            }
 //        });
+
         detailViewModel.getLiveData().observe(getViewLifecycleOwner(), detail -> {
-            for (Genre genre : detail.getGenres()){
+            for (Genre genre : detail.getGenres()) {
                 genres.add(genre.getName());
             }
+
             binding.tvOverview.setText(detail.getOverview());
             binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
         });
-//        detailViewModel.getListDetail().observe(getViewLifecycleOwner(), details -> {
-//            if (details != null) {
-//                binding.tvOverview.setText(details);
-//            }
-//        });
-        detailViewModel.RequestListDetail(id);
     }
-
-    //    public void fetchVideo() {
-//
-////        bundle.putInt("idFromDetail", id);
-////        TrailerFragment trailerFragment = new TrailerFragment();
-////        trailerFragment.setArguments(bundle);
-////        getFragmentManager()
-////                .beginTransaction()
-////                .replace(R.id.fragment_container, trailerFragment)
-////                .commit();
-//
-//
-//        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
-////        videoViewModel.setId(id);
-//        videoViewModel.getListVideo().observe(getViewLifecycleOwner(), videos -> {
-//            if (videos.size() > 0 && videos != null){
-//                for (Video video : videos){
-//                    if (video.getName().equals("Official Trailer") == true){
-//                        listVideo.add(new Video(video.getKey()));
-//                    }
-//                }
-//            }
-//        });
-//        videoViewModel.requestVideo(id);
-//    }
 }
+

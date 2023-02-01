@@ -29,6 +29,7 @@ public class DetailViewModel extends BaseViewModel {
     public MutableLiveData<Detail> getLiveData() {
         if (liveData == null) {
             liveData = new MutableLiveData<>();
+//            liveData.setValue(new Detail());
         }
         return liveData;
     }
