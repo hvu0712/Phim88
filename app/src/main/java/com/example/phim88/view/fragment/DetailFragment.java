@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +19,9 @@ import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentDetailBinding;
 import com.example.phim88.model.detail.Genre;
-import com.example.phim88.model.video.Video;
 import com.example.phim88.view.adapter.MyViewPagerAdapter;
-import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.DetailViewModel;
 import com.example.phim88.viewmodel.SharedViewModel;
-import com.example.phim88.viewmodel.VideoViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +36,7 @@ public class DetailFragment extends BaseFragment {
     private final List<String> genres = new ArrayList<>();
     public int movie_id;
     private int id;
+    private int mId;
     private MyViewPagerAdapter myViewPagerAdapter;
     private FragmentDetailBinding binding;
     private DetailViewModel detailViewModel;
@@ -75,6 +72,7 @@ public class DetailFragment extends BaseFragment {
         });
 
         id = getArguments().getInt("id");
+        mId = getArguments().getInt("mId");
         Log.e(TAG, "fetchVideo: " + id);
         Bundle bundle = new Bundle();
         bundle.putInt("idFromDetail", id);
@@ -123,47 +121,68 @@ public class DetailFragment extends BaseFragment {
     public void fetchDetail() {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Log.e(TAG, "123231231231231111: " + id);
-        sharedViewModel.setData(id);
-        detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
-        detailViewModel.RequestListDetail(id);
-        String backdrop = getArguments().getString("backdrop");
-        String img = getArguments().getString("img");
-        String title = getArguments().getString("title");
+        if (id != 0){
+            sharedViewModel.setData(id);
+            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+            detailViewModel.RequestListDetail(id);
+            String backdrop = getArguments().getString("backdrop");
+            String img = getArguments().getString("img");
+            String title = getArguments().getString("title");
 //        String overview = getArguments().getString("overview");
-        boolean adult = getArguments().getBoolean("adult");
-        if (adult == true) {
-            binding.tvAge.setText("TV 18+");
-        } else {
-            binding.tvAge.setText("TV 16+");
+            boolean adult = getArguments().getBoolean("adult");
+            if (adult == true) {
+                binding.tvAge.setText("TV 18+");
+            } else {
+                binding.tvAge.setText("TV 16+");
+            }
+            float voteCount = getArguments().getFloat("voteAverage") * 10;
+            String img_base = "https://image.tmdb.org/t/p/original";
+            int genreIds = getArguments().getInt("genreIds");
+            Log.e(TAG, "fetchImg: " + genreIds);
+
+            binding.ratingBar.setRating(getArguments().getFloat("voteAverage") / 2);
+
+            Glide.with(this)
+                    .load(img_base + img)
+                    .centerCrop()
+                    .into(binding.imageView2);
+            Glide.with(this)
+                    .load(img_base + backdrop)
+                    .centerCrop()
+                    .into(binding.imgBackdrop);
+            binding.tvLike.setText(Math.round(voteCount) + "%");
+            binding.tvMovieName.setText(title);
+        } else if (mId != 0){
+            sharedViewModel.setData(mId);
+            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+            detailViewModel.RequestListDetail(mId);
+            detailViewModel.getLiveData().observe(getViewLifecycleOwner(), detail -> {
+                String backdrop = detail.getBackdropPath();
+                String img = detail.getPosterPath();
+                String title = detail.getTitle();
+//        String overview = getArguments().getString("overview");
+                boolean adult = detail.getAdult();
+                if (adult == true) {
+                    binding.tvAge.setText("TV 18+");
+                } else {
+                    binding.tvAge.setText("TV 16+");
+                }
+                float voteCount = detail.getVoteAverage() * 10;
+                String img_base = "https://image.tmdb.org/t/p/original";
+                binding.ratingBar.setRating(detail.getVoteAverage() / 2);
+                Glide.with(this)
+                        .load(img_base + img)
+                        .centerCrop()
+                        .into(binding.imageView2);
+                Glide.with(this)
+                        .load(img_base + backdrop)
+                        .centerCrop()
+                        .into(binding.imgBackdrop);
+                binding.tvLike.setText(Math.round(voteCount) + "%");
+                binding.tvMovieName.setText(title);
+                Log.e(TAG, "fetchDetail: "+detail.getAdult()+" " + detail.getVideo()+ " "+detail.getBackdropPath()+" "+detail.getId());
+            });
         }
-        float voteCount = getArguments().getFloat("voteAverage") * 10;
-        String img_base = "https://image.tmdb.org/t/p/original";
-        int genreIds = getArguments().getInt("genreIds");
-        Log.e(TAG, "fetchImg: " + genreIds);
-        int id = getArguments().getInt("id");
-
-        binding.ratingBar.setRating(getArguments().getFloat("voteAverage") / 2);
-
-//        popularViewModel.requestPopular();
-        Glide.with(this)
-                .load(img_base + img)
-                .centerCrop()
-                .into(binding.imageView2);
-        Glide.with(this)
-                .load(img_base + backdrop)
-                .centerCrop()
-                .into(binding.imgBackdrop);
-        binding.tvLike.setText(Math.round(voteCount) + "%");
-        binding.tvMovieName.setText(title);
-
-//        detailViewModel.getListGenre().observe(getViewLifecycleOwner(), genres1 -> {
-//            if (genres1.size() > 0 && genres1 != null) {
-//                for (Genre genre : genres1) {
-//                    genres.add(genre.getName());
-//                }
-//                binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
-//            }
-//        });
 
         detailViewModel.getLiveData().observe(getViewLifecycleOwner(), detail -> {
             for (Genre genre : detail.getGenres()) {

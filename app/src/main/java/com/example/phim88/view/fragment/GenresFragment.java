@@ -72,7 +72,7 @@ public class GenresFragment extends BaseFragment{
        discoverViewModel.getMutableLiveData().observe(requireActivity(), discover -> {
            moreAdapter.setResultList(discover);
            for (Result result : discover){
-               Log.e(TAG, "discover: "+result.getTitle());
+               Log.e(TAG, "discover: "+result.getTitle()+" "+result.getId());
            }
            binding.rclvGenres.setLayoutManager(staggeredGridLayoutManager);
            binding.rclvGenres.setAdapter(moreAdapter);

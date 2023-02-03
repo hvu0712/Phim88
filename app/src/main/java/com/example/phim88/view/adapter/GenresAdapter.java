@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phim88.R;
 import com.example.phim88.control.ItemClickListener;
 import com.example.phim88.databinding.LvItemBinding;
-import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.genre.Genre;
 import com.example.phim88.view.fragment.GenresFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
@@ -65,15 +64,15 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if (isLongClick){
-                    genresFragment.setGetData(() -> item.getName());
-                    genresFragment.setGetId(() -> item.getId());
-                    initFragment(genresFragment, view);
-                    Toast.makeText(context,"Long click: "+ item.getName(), Toast.LENGTH_SHORT).show();
+//                    chưa có ý tưởng cho longClick, bao giờ có thêm sau
+//                    genresFragment.setGetData(() -> item.getName());
+//                    genresFragment.setGetId(() -> item.getId());
+//                    initFragment(genresFragment, view);
+//                    Toast.makeText(context,"Long click: "+ item.getName(), Toast.LENGTH_SHORT).show();
                 } else {
                     genresFragment.setGetData(() -> item.getName());
                     genresFragment.setGetId(() -> item.getId());
                     initFragment(genresFragment, view);
-                    Toast.makeText(context, item.getName()+" "+item.getId(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

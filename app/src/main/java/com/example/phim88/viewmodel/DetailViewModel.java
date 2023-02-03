@@ -34,27 +34,27 @@ public class DetailViewModel extends BaseViewModel {
         return liveData;
     }
 
-    public MutableLiveData<List<Genre>> getListGenre() {
-        if (listGenre == null) {
-            listGenre = new MutableLiveData<>();
-            listGenre.setValue(new ArrayList<>());
-        }
-        return listGenre;
-    }
-
-    public MutableLiveData<List<ProductionCompany>> getListProductionCompany() {
-        if (listProductionCompany == null) {
-            listProductionCompany = new MutableLiveData<>();
-            listProductionCompany.setValue(new ArrayList<>());
-        }
-        return listProductionCompany;
-    }
-    public MutableLiveData<String> getListDetail() {
-        if (listDetail == null) {
-            listDetail = new MutableLiveData<>();
-        }
-        return listDetail;
-    }
+//    public MutableLiveData<List<Genre>> getListGenre() {
+//        if (listGenre == null) {
+//            listGenre = new MutableLiveData<>();
+//            listGenre.setValue(new ArrayList<>());
+//        }
+//        return listGenre;
+//    }
+//
+//    public MutableLiveData<List<ProductionCompany>> getListProductionCompany() {
+//        if (listProductionCompany == null) {
+//            listProductionCompany = new MutableLiveData<>();
+//            listProductionCompany.setValue(new ArrayList<>());
+//        }
+//        return listProductionCompany;
+//    }
+//    public MutableLiveData<String> getListDetail() {
+//        if (listDetail == null) {
+//            listDetail = new MutableLiveData<>();
+//        }
+//        return listDetail;
+//    }
 
     public void RequestListDetail(int movie_id) {
         repository.callDetail(new Repository.RequestCallback() {
