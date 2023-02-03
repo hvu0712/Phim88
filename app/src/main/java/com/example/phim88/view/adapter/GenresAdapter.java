@@ -8,16 +8,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
+import com.example.phim88.control.ItemClickListener;
 import com.example.phim88.databinding.LvItemBinding;
+import com.example.phim88.model.detail.Detail;
 import com.example.phim88.model.genre.Genre;
 import com.example.phim88.view.fragment.GenresFragment;
-import com.example.phim88.view.fragment.MorePopularFragment;
+import com.example.phim88.viewmodel.GenresViewModel;
 import com.example.phim88.viewmodel.SharedViewModel;
 
 import java.util.ArrayList;
@@ -25,12 +27,16 @@ import java.util.List;
 
 public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder> {
 
-    private final List<Genre> data;
+    private List<Genre> data;
     private SharedViewModel sharedViewModel;
+    private Context context;
+    private GenresViewModel genresViewModel;
 
-    public GenresAdapter() {
+    public GenresAdapter(Context context) {
+        this.context = context;
         data = new ArrayList<>();
     }
+
 
     public void setData(List<Genre> data) {
         if (data == null) return;
@@ -53,24 +59,37 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder
         if (item == null) {
             return;
         }
+        GenresFragment genresFragment = new GenresFragment();
         holder.binding.tvItem.setText(item.getName());
-        holder.binding.tvItem.setOnClickListener(new View.OnClickListener() {
+        holder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), item.getName(), Toast.LENGTH_SHORT).show();
-                GenresFragment morePopularFragment = new GenresFragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.slide_in,
-                                R.anim.fade_out,
-                                R.anim.fade_in,
-                                R.anim.slide_out)
-                        .replace(R.id.fragment_container, morePopularFragment)
-                        .addToBackStack(null)
-                        .commit();
+            public void onClick(View view, int position, boolean isLongClick) {
+                if (isLongClick){
+                    genresFragment.setGetData(() -> item.getName());
+                    genresFragment.setGetId(() -> item.getId());
+                    initFragment(genresFragment, view);
+                    Toast.makeText(context,"Long click: "+ item.getName(), Toast.LENGTH_SHORT).show();
+                } else {
+                    genresFragment.setGetData(() -> item.getName());
+                    genresFragment.setGetId(() -> item.getId());
+                    initFragment(genresFragment, view);
+                    Toast.makeText(context, item.getName()+" "+item.getId(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void initFragment(Fragment fragment, View view){
+        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out)
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -81,13 +100,33 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.ViewHolder
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         public LvItemBinding binding;
+        private ItemClickListener itemClickListener;
 
         public ViewHolder(LvItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            this.binding.getRoot().setOnClickListener(this);
+            this.binding.getRoot().setOnLongClickListener(this);
+        }
+
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), true);
+            return true;
         }
     }
+
 }

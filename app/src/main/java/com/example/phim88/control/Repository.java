@@ -4,11 +4,13 @@ import android.content.Context;
 
 import com.example.phim88.control.api.CreditsApi;
 import com.example.phim88.control.api.DetailApi;
+import com.example.phim88.control.api.DiscoverApi;
 import com.example.phim88.control.api.GenresApi;
 import com.example.phim88.control.api.PopularApi;
 import com.example.phim88.control.api.SearchApi;
 import com.example.phim88.control.api.UpcomingApi;
 import com.example.phim88.control.api.VideoApi;
+import com.example.phim88.model.discover.Discover;
 import com.example.phim88.model.video.VideoResponse;
 import com.example.phim88.model.cast.Credits;
 import com.example.phim88.model.detail.Detail;
@@ -36,6 +38,7 @@ public class Repository {
     private final DetailApi detailApi;
     private final VideoApi videoApi;
     private final CreditsApi creditsApi;
+    private final DiscoverApi discoverApi;
     private final Retrofit requestTheMovieDb;
     private DetailFragment detailFragment;
     private Context context;
@@ -56,6 +59,22 @@ public class Repository {
         detailApi = requestTheMovieDb.create(DetailApi.class);
         videoApi = requestTheMovieDb.create(VideoApi.class);
         creditsApi = requestTheMovieDb.create(CreditsApi.class);
+        discoverApi = requestTheMovieDb.create(DiscoverApi.class);
+    }
+
+    public void callDiscover(RequestCallback callback, int with_genres){
+        Call<Discover> call = discoverApi.getDiscover(Const.info.key, Const.info.language, true, true, 1, with_genres);
+        call.enqueue(new Callback<Discover>() {
+            @Override
+            public void onResponse(Call<Discover> call, Response<Discover> response) {
+                callback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Discover> call, Throwable t) {
+                callback.fail(t.getMessage());
+            }
+        });
     }
 
     public void callApi(RequestCallback callback) {

@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity {
 
         DetailFragment detailFragment = new DetailFragment();
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
         setSupportActionBar(binding.toolBar);
         ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,7 +57,7 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setHomeAsUpIndicator(drawable);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
 
-        GenresAdapter adapter = new GenresAdapter();
+        GenresAdapter adapter = new GenresAdapter(getBaseContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.rclv.setLayoutManager(layoutManager);
         binding.rclv.setAdapter(adapter);
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
+
         viewModel.getGenres().observe(this, genres -> {
             adapter.setData(genres);
             adapter.notifyDataSetChanged();

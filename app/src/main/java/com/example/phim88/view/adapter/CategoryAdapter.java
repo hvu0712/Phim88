@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.phim88.R;
+import com.example.phim88.control.ItemClickListener;
 import com.example.phim88.databinding.ItemCategoryBinding;
 import com.example.phim88.model.Category;
 import com.example.phim88.view.fragment.DetailFragment;
@@ -120,13 +121,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return 0;
     }
 
-    public class CategoryViewHolder extends RecyclerView.ViewHolder {
+    public class CategoryViewHolder extends RecyclerView.ViewHolder{
 
-        StaggeredGridLayoutManager staggeredGridLayoutManager;
-        ItemCategoryBinding binding;
-        MovieAdapter movieAdapter;
-        UpcomingAdapter upcomingAdapter;
-        ConcatAdapter concatAdapter;
+        private StaggeredGridLayoutManager staggeredGridLayoutManager;
+        private ItemCategoryBinding binding;
+        private MovieAdapter movieAdapter;
+        private UpcomingAdapter upcomingAdapter;
+        private ConcatAdapter concatAdapter;
+        private ItemClickListener itemClickListener;
 
         public CategoryViewHolder(@NonNull ItemCategoryBinding binding) {
             super(binding.getRoot());
@@ -136,6 +138,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             upcomingAdapter = new UpcomingAdapter(binding.btnMore.getContext());
             movieAdapter = new MovieAdapter(binding.getRoot().getContext());
             concatAdapter = new ConcatAdapter(movieAdapter, upcomingAdapter);
+
         }
+
+
     }
 }
