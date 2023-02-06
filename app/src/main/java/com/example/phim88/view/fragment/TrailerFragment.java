@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -51,6 +52,8 @@ public class TrailerFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         binding = FragmentTrailerBinding.inflate(inflater, container, false);
+
+
 
         videoList = new ArrayList<>();
         trailerAdapter = new TrailerAdapter(getContext());
@@ -111,6 +114,15 @@ public class TrailerFragment extends BaseFragment {
 
 //        binding.videoViewTrailer.toggleFullScreen();
 
+        binding.rcvTrailer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE){
+                    Log.e(TAG, "onTouch: "+trailerAdapter.getVideoList().get(0).getKey());
+                }
+                return false;
+            }
+        });
 
         return binding.getRoot();
     }

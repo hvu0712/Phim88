@@ -246,7 +246,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
             app:titleTextColor="@color/white"
-            android:background="#0Dffffff"
+            android:background="@android:color/transparent"
             />
     </FrameLayout>
 </layout>

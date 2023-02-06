@@ -44,11 +44,17 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull TrailerViewHolder holder, int position) {
         Video video = videoList.get(position);
         if (video == null) {
             return;
         }
+        Log.e("TAG", "onBindViewHolder: "+videoList.get(0).getKey() + " " + videoList.get(0).getName());
 //        holder.binding.youTubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> {
 //
 //        });
@@ -72,9 +78,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
                     holder.binding.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.getRootView());
                 }
             }, options);
-
         } catch (Exception e) {
-            Log.e("TAG", "xeck333: " + e);
         }
         holder.binding.tvTitleTrailer.setText(video.getName());
     }
