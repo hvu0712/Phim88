@@ -193,5 +193,10 @@ public class DetailFragment extends BaseFragment {
             binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
         });
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().getViewModelStore().clear();
+    }
 }
 

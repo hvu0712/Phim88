@@ -29,12 +29,12 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private static final String TAG = "CategoryAdapter";
-    private final List<Category> mList;
+    private final List<Category> mList = new ArrayList<>();
     private MovieAdapter movieAdapter;
 
 
     public CategoryAdapter() {
-        mList = new ArrayList<>();
+
     }
 
     public void setData(List<Category> list) {

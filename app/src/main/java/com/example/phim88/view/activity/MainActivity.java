@@ -12,9 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.phim88.R;
 import com.example.phim88.databinding.ActivityMainBinding;
 import com.example.phim88.view.adapter.GenresAdapter;
+import com.example.phim88.view.custom.RippleAnimation;
 import com.example.phim88.view.fragment.DetailFragment;
 import com.example.phim88.view.fragment.SearchFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
@@ -37,7 +44,8 @@ public class MainActivity extends BaseActivity {
     private int viewHeight;
     private ValueAnimator animator;
     private SharedViewModel sharedViewModel;
-
+    private ImageView imageView;
+    private boolean isDark = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,17 +53,40 @@ public class MainActivity extends BaseActivity {
         LayoutInflater inflater = getLayoutInflater();
         binding = ActivityMainBinding.inflate(inflater, null, false);
         setContentView(binding.getRoot());
-
-        DetailFragment detailFragment = new DetailFragment();
+        imageView  = new ImageView(this);
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
-        setSupportActionBar(binding.toolBar);
-        ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_dehaze_24);
-        getSupportActionBar().setHomeAsUpIndicator(drawable);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
+//        setSupportActionBar(binding.toolBar);
+        binding.toolBar.inflateMenu(R.menu.menu);
+        binding.toolBar.setTitle("Phim88");
+        binding.toolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case android.R.id.home:
+                        dropAnim();
+                        break;
+                    case R.id.menu_genres:
+                        binding.navView.openDrawer(GravityCompat.END);
+                        break;
+                    case R.id.menu_search:
+                        SearchFragment fragment = new SearchFragment();
+                        fragment.setCallback(() -> onBackPressed());
+                        initFragment(R.id.fragment_container, fragment);
+                        break;
+                    case R.id.menu_darkMode:
+                        initTheme();
+                        break;
+                }
+                return false;
+            }
+        });
+//        ActionBar actionBar = getSupportActionBar();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_dehaze_24);
+//        getSupportActionBar().setHomeAsUpIndicator(drawable);
+//        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
 
         GenresAdapter adapter = new GenresAdapter(getBaseContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -79,30 +110,56 @@ public class MainActivity extends BaseActivity {
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        super.onCreateOptionsMenu(menu);
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                dropAnim();
-                break;
-            case R.id.menu_genres:
-                binding.navView.openDrawer(GravityCompat.END);
-                break;
-            case R.id.menu_search:
-                SearchFragment fragment = new SearchFragment();
-                fragment.setCallback(() -> onBackPressed());
-                initFragment(R.id.fragment_container, fragment);
-                break;
-            case R.id.menu_darkMode:
-                break;
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                dropAnim();
+//                break;
+//            case R.id.menu_genres:
+//                binding.navView.openDrawer(GravityCompat.END);
+//                break;
+//            case R.id.menu_search:
+//                SearchFragment fragment = new SearchFragment();
+//                fragment.setCallback(() -> onBackPressed());
+//                initFragment(R.id.fragment_container, fragment);
+//                break;
+//            case R.id.menu_darkMode:
+//                initTheme();
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    private void initTheme(){
+        if (isDark == true){
+            RippleAnimation.create(imageView).setDuration(500).start();
+            binding.toolBar.setBackgroundColor(Color.GREEN);
+            binding.toolBar.setTitleTextColor(Color.BLACK);
+            binding.rclv.setBackgroundColor(Color.BLACK);
+            TextView textView = findViewById(R.id.tv_genre);
+            textView.setTextColor(Color.WHITE);
+            ConstraintLayout constraintLayout = findViewById(R.id.main);
+            constraintLayout.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.main_shape_black));
+            isDark = false;
+        } else {
+            isDark = true;
+            RippleAnimation.create(imageView).setDuration(500).start();
+            binding.toolBar.setBackgroundColor(0xff6acafd);
+            binding.toolBar.setTitleTextColor(Color.WHITE);
+            binding.rclv.setBackgroundColor(Color.WHITE);
+            ConstraintLayout constraintLayout = findViewById(R.id.main);
+            constraintLayout.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.main_shape));
+            TextView textView = findViewById(R.id.tv_genre);
+            textView.setTextColor(Color.BLACK);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void dropAnim() {
@@ -138,5 +195,8 @@ public class MainActivity extends BaseActivity {
         builder.create().show();
     }
 
+    interface DarkModeInterFace{
+        void enableDarkMode();
+    }
 
 }

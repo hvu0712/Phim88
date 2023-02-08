@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.example.phim88.R;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 
@@ -25,6 +27,8 @@ public class SplashScreen extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         middleAnimation = AnimationUtils.loadAnimation(this, R.anim.middle_animation);

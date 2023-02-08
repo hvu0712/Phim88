@@ -3,6 +3,7 @@ package com.example.phim88.view.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,6 +30,7 @@ public class MainFragment extends BaseFragment {
 
     private static final String TAG = "MainFragment";
     private final List<Category> listCategory = new ArrayList<>();
+    private final List<Category> listCategory1 = new ArrayList<>();
     private final List<Popular> movieListPopular = new ArrayList<>();
     private final List<Upcoming> movieListUpcoming = new ArrayList<>();
     private FragmentMainBinding binding;
@@ -53,7 +55,15 @@ public class MainFragment extends BaseFragment {
 
         fetchUpcoming();
 
-        Log.e(TAG, "onCreateView: " + movieListPopular);
+        binding.rcvCategory.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE){
+                    Log.e(TAG, "categoryCount: " + categoryAdapter.getItemCount());
+                }
+                return false;
+            }
+        });
 
         return binding.getRoot();
     }
@@ -61,7 +71,6 @@ public class MainFragment extends BaseFragment {
 
     public void fetchPopular() {
         // get value popular
-
         popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
         popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
             if (populars != null && populars.size() > 0) {
@@ -77,7 +86,7 @@ public class MainFragment extends BaseFragment {
                     setNameCategory("Popular");
                 }
             };
-            Log.e(TAG, "fetchPopular: ");
+            Log.e(TAG, "fetchPopular1: "+listCategory);
             categoryAdapter.setData(listCategory);
             binding.rcvCategory.setAdapter(categoryAdapter);
             binding.rcvCategory.setLayoutManager(linearLayoutManager);
@@ -86,13 +95,13 @@ public class MainFragment extends BaseFragment {
         popularViewModel.requestPopular();
     }
 
-    public void getPopulars() {
-        popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
-        popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
-
-        });
-        popularViewModel.requestPopular();
-    }
+//    public void getPopulars() {
+//        popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
+//        popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
+//
+//        });
+//        popularViewModel.requestPopular();
+//    }
 
     public void fetchUpcoming() {
         // get value upcoming
@@ -110,10 +119,17 @@ public class MainFragment extends BaseFragment {
                     setUpcomings(movieListUpcoming);
                 }
             };
+            Log.e(TAG, "fetchPopular2: "+listCategory);
             categoryAdapter.setData(listCategory);
             binding.rcvCategory.setAdapter(categoryAdapter);
             binding.rcvCategory.setLayoutManager(linearLayoutManager);
         });
         upcomingViewModel.RequestUpcoming();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().getViewModelStore().clear();
     }
 }
