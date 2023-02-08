@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -56,37 +57,43 @@ public class MainActivity extends BaseActivity {
         imageView  = new ImageView(this);
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
-//        setSupportActionBar(binding.toolBar);
-        binding.toolBar.inflateMenu(R.menu.menu);
-        binding.toolBar.setTitle("Phim88");
-        binding.toolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case android.R.id.home:
-                        dropAnim();
-                        break;
-                    case R.id.menu_genres:
-                        binding.navView.openDrawer(GravityCompat.END);
-                        break;
-                    case R.id.menu_search:
-                        SearchFragment fragment = new SearchFragment();
-                        fragment.setCallback(() -> onBackPressed());
-                        initFragment(R.id.fragment_container, fragment);
-                        break;
-                    case R.id.menu_darkMode:
-                        initTheme();
-                        break;
-                }
-                return false;
-            }
-        });
-//        ActionBar actionBar = getSupportActionBar();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_dehaze_24);
-//        getSupportActionBar().setHomeAsUpIndicator(drawable);
-//        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
+        setSupportActionBar(binding.toolBar);
+//        binding.toolBar.inflateMenu(R.menu.menu);
+//        binding.toolBar.setTitle("Phim88");
+//        binding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "hohoho", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        binding.toolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case android.R.id.home:
+//                        dropAnim();
+//                        break;
+//                    case R.id.menu_genres:
+//                        binding.navView.openDrawer(GravityCompat.END);
+//                        break;
+//                    case R.id.menu_search:
+//                        SearchFragment fragment = new SearchFragment();
+//                        fragment.setCallback(() -> onBackPressed());
+//                        initFragment(R.id.fragment_container, fragment);
+//                        break;
+//                    case R.id.menu_darkMode:
+//                        initTheme();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+        ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_baseline_dehaze_24);
+        getSupportActionBar().setHomeAsUpIndicator(drawable);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6acafd")));
 
         GenresAdapter adapter = new GenresAdapter(getBaseContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -110,33 +117,33 @@ public class MainActivity extends BaseActivity {
 
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        super.onCreateOptionsMenu(menu);
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                dropAnim();
-//                break;
-//            case R.id.menu_genres:
-//                binding.navView.openDrawer(GravityCompat.END);
-//                break;
-//            case R.id.menu_search:
-//                SearchFragment fragment = new SearchFragment();
-//                fragment.setCallback(() -> onBackPressed());
-//                initFragment(R.id.fragment_container, fragment);
-//                break;
-//            case R.id.menu_darkMode:
-//                initTheme();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                dropAnim();
+                break;
+            case R.id.menu_genres:
+                binding.navView.openDrawer(GravityCompat.END);
+                break;
+            case R.id.menu_search:
+                SearchFragment fragment = new SearchFragment();
+                fragment.setCallback(() -> onBackPressed());
+                initFragment(R.id.fragment_container, fragment);
+                break;
+            case R.id.menu_darkMode:
+                initTheme();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initTheme(){
         if (isDark == true){
