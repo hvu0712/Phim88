@@ -151,8 +151,8 @@ public class MainActivity extends BaseActivity {
             binding.toolBar.setBackgroundColor(Color.GREEN);
             binding.toolBar.setTitleTextColor(Color.BLACK);
             binding.rclv.setBackgroundColor(Color.BLACK);
-            TextView textView = findViewById(R.id.tv_genre);
-            textView.setTextColor(Color.WHITE);
+//            TextView textView = findViewById(R.id.tv_genre);
+//            textView.setTextColor(Color.WHITE);
             ConstraintLayout constraintLayout = findViewById(R.id.main);
             constraintLayout.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.main_shape_black));
             isDark = false;
@@ -164,8 +164,8 @@ public class MainActivity extends BaseActivity {
             binding.rclv.setBackgroundColor(Color.WHITE);
             ConstraintLayout constraintLayout = findViewById(R.id.main);
             constraintLayout.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.main_shape));
-            TextView textView = findViewById(R.id.tv_genre);
-            textView.setTextColor(Color.BLACK);
+//            TextView textView = findViewById(R.id.tv_genre);
+//            textView.setTextColor(Color.BLACK);
         }
     }
 
