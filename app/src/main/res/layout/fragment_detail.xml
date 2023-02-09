@@ -21,7 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
             <ImageView
                 android:id="@+id/img_backdrop"
@@ -61,12 +63,12 @@
             android:text="movie name"
             android:textSize="@dimen/dp_12"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/baseline_img"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintLeft_toRightOf="@id/cardView"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview_detail"
-            app:layout_constraintVertical_bias="0.172" />
+            android:layout_marginTop="@dimen/_15sdp"
+             />
 
         <com.google.android.material.internal.BaselineLayout
             android:id="@+id/baseline_img"
@@ -85,6 +87,7 @@
             android:stepSize="0.5"
             android:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintBottom_toTopOf="@id/baseline_img"
             app:layout_constraintTop_toBottomOf="@+id/tv_movieName" />
 
         <ImageView
