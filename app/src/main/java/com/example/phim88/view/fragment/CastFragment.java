@@ -9,21 +9,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.phim88.R;
 import com.example.phim88.databinding.FragmentCastsBinding;
 import com.example.phim88.model.cast.Cast;
 import com.example.phim88.view.adapter.CastAdapter;
 import com.example.phim88.viewmodel.CreditsViewModel;
 import com.example.phim88.viewmodel.SharedViewModel;
 
-public class CatsFragment extends Fragment {
+public class CastFragment extends Fragment {
 
-    private static final String TAG = "CatsFragment";
+    private static final String TAG = "CastFragment";
     private FragmentCastsBinding binding;
     private CreditsViewModel creditsViewModel;
     public int data;

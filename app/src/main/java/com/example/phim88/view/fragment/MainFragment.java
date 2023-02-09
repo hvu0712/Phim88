@@ -1,6 +1,12 @@
 package com.example.phim88.view.fragment;
 
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.R;
+import com.example.phim88.control.Repository;
 import com.example.phim88.databinding.FragmentMainBinding;
 import com.example.phim88.model.Category;
 import com.example.phim88.model.popular.Popular;
@@ -41,11 +48,57 @@ public class MainFragment extends BaseFragment {
     private Category upcoming;
     private LinearLayoutManager linearLayoutManager;
 
+    private ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback(){
+        @Override
+        public void onAvailable(@NonNull Network network) {
+            super.onAvailable(network);
+            Log.e(TAG, "onAvailable: ");
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    categoryAdapter = new CategoryAdapter();
+
+                    linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+
+                    fetchPopular();
+
+                    fetchUpcoming();
+                }
+            });
+
+        }
+
+        @Override
+        public void onLost(@NonNull Network network) {
+            super.onLost(network);
+            Log.e(TAG, "onLost: ");
+        }
+
+        @Override
+        public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+            super.onCapabilitiesChanged(network, networkCapabilities);
+            final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+            final boolean unmetered1 = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            Log.e(TAG, "onCapabilitiesChanged: "+unmetered+ " "+unmetered1);
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+
+        NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .build();
+
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) binding.getRoot().getContext().getSystemService(ConnectivityManager.class);
+        connectivityManager.requestNetwork(networkRequest, networkCallback);
 
         categoryAdapter = new CategoryAdapter();
 

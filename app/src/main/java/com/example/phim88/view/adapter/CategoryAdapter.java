@@ -117,7 +117,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 }
             });
         }
-
     }
 
     @Override
@@ -136,7 +135,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         private MovieAdapter movieAdapter;
         private UpcomingAdapter upcomingAdapter;
         private ConcatAdapter concatAdapter;
-        private ItemClickListener itemClickListener;
 
         public CategoryViewHolder(@NonNull ItemCategoryBinding binding) {
             super(binding.getRoot());

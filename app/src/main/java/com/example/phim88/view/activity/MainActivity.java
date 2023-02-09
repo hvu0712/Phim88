@@ -5,8 +5,14 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,6 +57,42 @@ public class MainActivity extends BaseActivity {
     private DarkModeInterFace darkModeInterFace;
     private CategoryAdapter categoryAdapter;
     private Category category;
+    private ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback(){
+        @Override
+        public void onAvailable(@NonNull Network network) {
+            super.onAvailable(network);
+            Log.e(TAG, "onAvailable: ");
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    GenresAdapter adapter = new GenresAdapter(getBaseContext());
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+                    binding.rclv.setLayoutManager(layoutManager);
+                    binding.rclv.setAdapter(adapter);
+                    viewModel.getGenres().observe(MainActivity.this, genres -> {
+                        adapter.setData(genres);
+                        adapter.notifyDataSetChanged();
+                    });
+                    viewModel.requestGenres();
+                }
+            });
+        }
+
+        @Override
+        public void onLost(@NonNull Network network) {
+            super.onLost(network);
+            Log.e(TAG, "onLost: ");
+        }
+
+        @Override
+        public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+            super.onCapabilitiesChanged(network, networkCapabilities);
+            final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+            final boolean unmetered1 = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            Log.e(TAG, "onCapabilitiesChanged: "+unmetered+ " "+unmetered1);
+        }
+    };
 
     public void setDarkModeInterFace(DarkModeInterFace darkModeInterFace) {
         this.darkModeInterFace = darkModeInterFace;
@@ -68,6 +110,17 @@ public class MainActivity extends BaseActivity {
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
         setSupportActionBar(binding.toolBar);
+
+
+        NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .build();
+
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        connectivityManager.requestNetwork(networkRequest, networkCallback);
 //        binding.toolBar.inflateMenu(R.menu.menu);
 //        binding.toolBar.setTitle("Phim88");
 //        binding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {

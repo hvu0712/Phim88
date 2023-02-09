@@ -1,6 +1,12 @@
 package com.example.phim88.control;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.phim88.control.api.CreditsApi;
 import com.example.phim88.control.api.DetailApi;
@@ -42,6 +48,27 @@ public class Repository {
     private final Retrofit requestTheMovieDb;
     private DetailFragment detailFragment;
     private Context context;
+    private ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback(){
+        @Override
+        public void onAvailable(@NonNull Network network) {
+            super.onAvailable(network);
+            Log.e(TAG, "onAvailable: ");
+        }
+
+        @Override
+        public void onLost(@NonNull Network network) {
+            super.onLost(network);
+            Log.e(TAG, "onLost: ");
+        }
+
+        @Override
+        public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+            super.onCapabilitiesChanged(network, networkCapabilities);
+            final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+            final boolean unmetered1 = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            Log.e(TAG, "onCapabilitiesChanged: "+unmetered+ " "+unmetered1);
+        }
+    };
 
     public Repository() {
         Gson gson = new GsonBuilder()

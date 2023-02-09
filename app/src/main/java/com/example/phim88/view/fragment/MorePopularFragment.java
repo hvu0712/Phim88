@@ -50,11 +50,15 @@ public class MorePopularFragment extends BaseFragment {
         bundle = getArguments();
 
 
-        Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
+        if (bundle != null){
+            Log.e(TAG, "onCreateView1: " + bundle.getInt("position"));
 
-        position = bundle.getInt("position");
+            position = bundle.getInt("position");
 
-        p = position;
+            p = position;
+        }
+
+
 
         popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
         upcomingViewModel = new ViewModelProvider(this).get(UpcomingViewModel.class);
@@ -66,7 +70,7 @@ public class MorePopularFragment extends BaseFragment {
             }
         });
 
-        if (bundle.getInt("position") == 0) {
+        if (p == 0) {
             binding.tvTitle.setTitle("Popular");
             popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
                 if (populars != null && populars.size() > 0) {
@@ -78,6 +82,7 @@ public class MorePopularFragment extends BaseFragment {
 
                 if (movieListPopular != null && movieListPopular.size() > 0) {
                     movieAdapter.setData(movieListPopular);
+                    skeletonScreen.hide();
                 }
 
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -85,22 +90,23 @@ public class MorePopularFragment extends BaseFragment {
                 Log.e("TAG", "onCreateView: " + movieListPopular.size());
                 Log.e("TAG", "onCreateView: " + movieAdapter.getItemCount());
                 binding.rclvPopular.setAdapter(movieAdapter);
+
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        skeletonScreen.hide();
+//                    }
+//                }, 1000);
                 skeletonScreen = Skeleton.bind(binding.rclvPopular)
                         .adapter(movieAdapter)
                         .load(R.layout.more_item_skeleton)
                         .duration(500)
                         .angle(0)
                         .show();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        skeletonScreen.hide();
-                    }
-                }, 1000);
             });
             popularViewModel.requestPopular();
-        } else if (bundle.getInt("position") == 1) {
+        } else if (p == 1) {
             binding.tvTitle.setTitle("Upcoming");
             upcomingViewModel.getListUpcoming().observe(getViewLifecycleOwner(), upcomings -> {
                 if (upcomings != null && upcomings.size() > 0) {
@@ -112,6 +118,7 @@ public class MorePopularFragment extends BaseFragment {
 
                 if (movieListUpcoming != null && movieListUpcoming.size() > 0) {
                     movieAdapter.setDataUpcoming(movieListUpcoming);
+                    skeletonScreen.hide();
                 }
 
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -119,20 +126,21 @@ public class MorePopularFragment extends BaseFragment {
                 Log.e("TAG", "onCreateView: " + movieListUpcoming.size());
                 Log.e("TAG", "onCreateView: " + movieAdapter.getItemCount());
                 binding.rclvPopular.setAdapter(movieAdapter);
+
+
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        skeletonScreen.hide();
+//                    }
+//                }, 1000);
                 skeletonScreen = Skeleton.bind(binding.rclvPopular)
                         .adapter(movieAdapter).count(10)
                         .load(R.layout.more_item_skeleton)
                         .duration(500)
                         .angle(0)
                         .show();
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        skeletonScreen.hide();
-                    }
-                }, 1000);
             });
             upcomingViewModel.RequestUpcoming();
         }
