@@ -6,31 +6,32 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.phim88.R;
 import com.example.phim88.databinding.ActivityMainBinding;
+import com.example.phim88.model.Category;
+import com.example.phim88.view.adapter.CategoryAdapter;
 import com.example.phim88.view.adapter.GenresAdapter;
 import com.example.phim88.view.custom.RippleAnimation;
-import com.example.phim88.view.fragment.DetailFragment;
+import com.example.phim88.view.custom.Theme;
 import com.example.phim88.view.fragment.SearchFragment;
 import com.example.phim88.viewmodel.GenresViewModel;
 import com.example.phim88.viewmodel.SharedViewModel;
@@ -46,7 +47,15 @@ public class MainActivity extends BaseActivity {
     private ValueAnimator animator;
     private SharedViewModel sharedViewModel;
     private ImageView imageView;
-    private boolean isDark = true;
+    public boolean isDark = true;
+    private DarkModeInterFace darkModeInterFace;
+    private CategoryAdapter categoryAdapter;
+    private Category category;
+
+    public void setDarkModeInterFace(DarkModeInterFace darkModeInterFace) {
+        this.darkModeInterFace = darkModeInterFace;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +63,8 @@ public class MainActivity extends BaseActivity {
         LayoutInflater inflater = getLayoutInflater();
         binding = ActivityMainBinding.inflate(inflater, null, false);
         setContentView(binding.getRoot());
-        imageView  = new ImageView(this);
+        categoryAdapter = new CategoryAdapter();
+        imageView = new ImageView(this);
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         viewModel = new ViewModelProvider(this).get(GenresViewModel.class);
         setSupportActionBar(binding.toolBar);
@@ -116,7 +126,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -145,27 +154,43 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initTheme(){
-        if (isDark == true){
+
+    private void initTheme() {
+        if (isDark == true) {
             RippleAnimation.create(imageView).setDuration(500).start();
-            binding.toolBar.setBackgroundColor(Color.GREEN);
-            binding.toolBar.setTitleTextColor(Color.BLACK);
-            binding.rclv.setBackgroundColor(Color.BLACK);
+            binding.toolBar.setBackgroundColor(Theme.key_backGroundMainDark);
+            binding.toolBar.setTitleTextColor(Theme.key_white_dark);
+            binding.rclv.setBackgroundColor(Theme.key_white_dark);
             TextView textView = findViewById(R.id.tv_genre);
+            TextView tvMore = findViewById(R.id.btn_more);
+            tvMore.setBackgroundColor(Color.BLACK);
             textView.setTextColor(Color.WHITE);
+            synchronized (categoryAdapter){
+                categoryAdapter.setDark(true);
+                categoryAdapter.notify();
+                categoryAdapter.notifyDataSetChanged();
+            }
+            categoryAdapter.setDark(true);
+            categoryAdapter.notifyDataSetChanged();
             ConstraintLayout constraintLayout = findViewById(R.id.main);
             constraintLayout.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.main_shape_black));
+            FragmentContainerView fragmentContainerView = findViewById(R.id.fragment_main);
+            fragmentContainerView.setBackgroundColor(Theme.key_backGroundMainDark);
             isDark = false;
         } else {
             isDark = true;
             RippleAnimation.create(imageView).setDuration(500).start();
-            binding.toolBar.setBackgroundColor(0xff6acafd);
-            binding.toolBar.setTitleTextColor(Color.WHITE);
-            binding.rclv.setBackgroundColor(Color.WHITE);
+            binding.toolBar.setBackgroundColor(Theme.key_backGroundMain);
+            binding.toolBar.setTitleTextColor(Theme.key_white);
+            binding.rclv.setBackgroundColor(Theme.key_white);
             ConstraintLayout constraintLayout = findViewById(R.id.main);
             constraintLayout.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.main_shape));
             TextView textView = findViewById(R.id.tv_genre);
+            FragmentContainerView fragmentContainerView = findViewById(R.id.fragment_main);
+            fragmentContainerView.setBackgroundColor(Theme.key_backGroundMain);
             textView.setTextColor(Color.BLACK);
+            TextView tvMore = findViewById(R.id.btn_more);
+            tvMore.setBackgroundColor(Theme.key_white);
         }
     }
 
@@ -202,7 +227,7 @@ public class MainActivity extends BaseActivity {
         builder.create().show();
     }
 
-    interface DarkModeInterFace{
+    public interface DarkModeInterFace {
         void enableDarkMode();
     }
 

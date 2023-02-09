@@ -11,6 +11,7 @@ public class Category {
     private List<Popular> movies;
     private List<Upcoming> upcomings;
 
+
     public String getNameCategory() {
         return nameCategory;
     }

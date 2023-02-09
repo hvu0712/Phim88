@@ -86,6 +86,7 @@ public class MainFragment extends BaseFragment {
                     setNameCategory("Popular");
                 }
             };
+
             Log.e(TAG, "fetchPopular1: "+listCategory);
             categoryAdapter.setData(listCategory);
             binding.rcvCategory.setAdapter(categoryAdapter);
@@ -94,14 +95,6 @@ public class MainFragment extends BaseFragment {
         });
         popularViewModel.requestPopular();
     }
-
-//    public void getPopulars() {
-//        popularViewModel = new ViewModelProvider(this).get(PopularViewModel.class);
-//        popularViewModel.getListPopular().observe(getViewLifecycleOwner(), populars -> {
-//
-//        });
-//        popularViewModel.requestPopular();
-//    }
 
     public void fetchUpcoming() {
         // get value upcoming

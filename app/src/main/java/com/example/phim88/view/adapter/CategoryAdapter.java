@@ -2,6 +2,7 @@ package com.example.phim88.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.phim88.R;
 import com.example.phim88.control.ItemClickListener;
 import com.example.phim88.databinding.ItemCategoryBinding;
 import com.example.phim88.model.Category;
+import com.example.phim88.view.activity.MainActivity;
 import com.example.phim88.view.fragment.DetailFragment;
 import com.example.phim88.view.fragment.MorePopularFragment;
 
@@ -31,7 +33,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private static final String TAG = "CategoryAdapter";
     private final List<Category> mList = new ArrayList<>();
     private MovieAdapter movieAdapter;
+    private Boolean isDark;
 
+    public void setDark(Boolean dark) {
+        isDark = dark;
+    }
 
     public CategoryAdapter() {
 
@@ -60,6 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         if (category == null) {
             return;
         }
+
         holder.movieAdapter.setData(category.getMovies());
 
         holder.upcomingAdapter.setUpcoming(category.getUpcomings());
@@ -121,6 +128,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return 0;
     }
 
+
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
 
         private StaggeredGridLayoutManager staggeredGridLayoutManager;
@@ -138,9 +146,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             upcomingAdapter = new UpcomingAdapter(binding.btnMore.getContext());
             movieAdapter = new MovieAdapter(binding.getRoot().getContext());
             concatAdapter = new ConcatAdapter(movieAdapter, upcomingAdapter);
-
+            if (isDark != null){
+                if (isDark == true){
+                    binding.btnMore.setBackgroundColor(Color.BLACK);
+                    binding.tvGenre.setBackgroundColor(Color.WHITE);
+                }
+            }
         }
-
-
     }
 }

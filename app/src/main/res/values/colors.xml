@@ -10,4 +10,5 @@
     <color name="actionBarColor">#6acafd</color>
     <color name="yellow">#FFD700</color>
     <color name="button">#FF6633</color>
+    <color name="dark_mode_white">#FFFBF5</color>
 </resources>
