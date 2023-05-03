@@ -89,6 +89,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     bundle.putString("backdrop", popular.getBackdropPath());
                     bundle.putInt("id", popular.getId());
 
+
                     detailFragment.setArguments(bundle);
                     trailerFragment.setArguments(bundle);
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();

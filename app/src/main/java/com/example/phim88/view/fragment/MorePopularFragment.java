@@ -91,13 +91,13 @@ public class MorePopularFragment extends BaseFragment {
                 Log.e("TAG", "onCreateView: " + movieAdapter.getItemCount());
                 binding.rclvPopular.setAdapter(movieAdapter);
 
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        skeletonScreen.hide();
-//                    }
-//                }, 1000);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        skeletonScreen.hide();
+                    }
+                }, 1000);
                 skeletonScreen = Skeleton.bind(binding.rclvPopular)
                         .adapter(movieAdapter)
                         .load(R.layout.more_item_skeleton)
@@ -128,13 +128,13 @@ public class MorePopularFragment extends BaseFragment {
                 binding.rclvPopular.setAdapter(movieAdapter);
 
 
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        skeletonScreen.hide();
-//                    }
-//                }, 1000);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        skeletonScreen.hide();
+                    }
+                }, 1000);
                 skeletonScreen = Skeleton.bind(binding.rclvPopular)
                         .adapter(movieAdapter).count(10)
                         .load(R.layout.more_item_skeleton)

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class DetailFragment extends BaseFragment {
@@ -56,20 +55,20 @@ public class DetailFragment extends BaseFragment {
 //        binding.viewPager.setOffscreenPageLimit(3);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
         myViewPagerAdapter.notifyDataSetChanged();
-        executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
-        executorService = Executors.newFixedThreadPool(4);
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
+//        executor = Executors.newSingleThreadExecutor();
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//        executorService = Executors.newFixedThreadPool(4);
+//        executorService.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
 
         id = getArguments().getInt("id");
         mId = getArguments().getInt("mId");
@@ -104,31 +103,21 @@ public class DetailFragment extends BaseFragment {
             @Override
             public void run() {
                 skeletonScreen.hide();
-//                skeletonScreen1.hide();
             }
-        },1000);
+        }, 1000);
         return binding.getRoot();
     }
 
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-//        Log.e(TAG, "123231231231231111: " + id);
-//        sharedViewModel.setData(id);
-//    }
-
     public void fetchDetail() {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        Log.e(TAG, "123231231231231111: " + id);
-        if (id != 0){
-            sharedViewModel.setData(id);
+        if (id != 0) {
+//            sharedViewModel.setData(id);
             detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
             detailViewModel.RequestListDetail(id);
             String backdrop = getArguments().getString("backdrop");
             String img = getArguments().getString("img");
             String title = getArguments().getString("title");
-//        String overview = getArguments().getString("overview");
+            String overview = getArguments().getString("overview");
             boolean adult = getArguments().getBoolean("adult");
             if (adult == true) {
                 binding.tvAge.setText("TV 18+");
@@ -138,8 +127,7 @@ public class DetailFragment extends BaseFragment {
             float voteCount = getArguments().getFloat("voteAverage") * 10;
             String img_base = "https://image.tmdb.org/t/p/original";
             int genreIds = getArguments().getInt("genreIds");
-            Log.e(TAG, "fetchImg: " + genreIds);
-
+            binding.tvOverview.setText(overview);
             binding.ratingBar.setRating(getArguments().getFloat("voteAverage") / 2);
 
             Glide.with(this)
@@ -152,7 +140,9 @@ public class DetailFragment extends BaseFragment {
                     .into(binding.imgBackdrop);
             binding.tvLike.setText(Math.round(voteCount) + "%");
             binding.tvMovieName.setText(title);
-        } else if (mId != 0){
+
+            Log.e(TAG, "fetchDetail: " + title + genres);
+        } else if (mId != 0) {
             sharedViewModel.setData(mId);
             detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
             detailViewModel.RequestListDetail(mId);
@@ -180,7 +170,14 @@ public class DetailFragment extends BaseFragment {
                         .into(binding.imgBackdrop);
                 binding.tvLike.setText(Math.round(voteCount) + "%");
                 binding.tvMovieName.setText(title);
-                Log.e(TAG, "fetchDetail: "+detail.getAdult()+" " + detail.getVideo()+ " "+detail.getBackdropPath()+" "+detail.getId());
+                for (Genre genre : detail.getGenres()) {
+                    genres.add(genre.getName());
+                }
+
+                binding.tvOverview.setText(detail.getOverview());
+                binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
+
+                Log.e(TAG, "fetchDetail: " + detail.getAdult() + " " + detail.getVideo() + " " + detail.getBackdropPath() + " " + detail.getId());
             });
         }
 
@@ -193,6 +190,7 @@ public class DetailFragment extends BaseFragment {
             binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
         });
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

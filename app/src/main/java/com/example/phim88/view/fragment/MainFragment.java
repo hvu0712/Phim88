@@ -61,9 +61,9 @@ public class MainFragment extends BaseFragment {
 
                     linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
 
-                    fetchPopular();
-
-                    fetchUpcoming();
+//                    fetchPopular();
+//
+//                    fetchUpcoming();
                 }
             });
 
@@ -107,7 +107,6 @@ public class MainFragment extends BaseFragment {
         fetchPopular();
 
         fetchUpcoming();
-
         binding.rcvCategory.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
