@@ -108,11 +108,19 @@ public class DetailFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.setData(id);
+    }
+
     public void fetchDetail() {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        detailViewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
         if (id != 0) {
 //            sharedViewModel.setData(id);
-            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+//            detailViewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
             detailViewModel.RequestListDetail(id);
             String backdrop = getArguments().getString("backdrop");
             String img = getArguments().getString("img");
@@ -126,7 +134,7 @@ public class DetailFragment extends BaseFragment {
             }
             float voteCount = getArguments().getFloat("voteAverage") * 10;
             String img_base = "https://image.tmdb.org/t/p/original";
-            int genreIds = getArguments().getInt("genreIds");
+//            int genreIds = getArguments().getInt("genreIds");
             binding.tvOverview.setText(overview);
             binding.ratingBar.setRating(getArguments().getFloat("voteAverage") / 2);
 
@@ -144,7 +152,7 @@ public class DetailFragment extends BaseFragment {
             Log.e(TAG, "fetchDetail: " + title + genres);
         } else if (mId != 0) {
             sharedViewModel.setData(mId);
-            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+//            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
             detailViewModel.RequestListDetail(mId);
             detailViewModel.getLiveData().observe(getViewLifecycleOwner(), detail -> {
                 String backdrop = detail.getBackdropPath();
@@ -177,7 +185,7 @@ public class DetailFragment extends BaseFragment {
                 binding.tvOverview.setText(detail.getOverview());
                 binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
 
-                Log.e(TAG, "fetchDetail: " + detail.getAdult() + " " + detail.getVideo() + " " + detail.getBackdropPath() + " " + detail.getId());
+                Log.e(TAG, "fetchDetail11: " + detail.getAdult() + " " + detail.getVideo() + " " + detail.getBackdropPath() + " " + detail.getId());
             });
         }
 
@@ -188,6 +196,7 @@ public class DetailFragment extends BaseFragment {
 
             binding.tvOverview.setText(detail.getOverview());
             binding.tvGenres.setText(String.valueOf(genres).replace("[", "").replace("]", ""));
+            Log.e(TAG, "fetchDetail123456789: "+genres);
         });
     }
 

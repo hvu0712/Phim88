@@ -74,6 +74,7 @@ public class DetailViewModel extends BaseViewModel {
 //                    }
                     Detail o = (Detail) object;
                     DetailViewModel.this.liveData.postValue(o);
+                    Log.e(TAG, "success: "+o.genres.get(0).name);
                 }
             }
 
