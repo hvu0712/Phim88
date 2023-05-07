@@ -1,8 +1,10 @@
 package com.example.phim88.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phim88.databinding.ItemTrailerBinding;
 import com.example.phim88.model.video.Video;
+import com.example.phim88.view.activity.MainActivity2;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController;
 
@@ -67,6 +71,14 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 //                holder.binding.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.getRootView());
 //            }
 //        }, options);
+//        holder.binding.youTubePlayerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent(view.getContext(), MainActivity2.class);
+//                holder.binding.getRoot().getContext().startActivity(intent);
+//            }
+//        });
         try {
             IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
             holder.binding.youTubePlayerView.initialize(new AbstractYouTubePlayerListener() {
@@ -75,9 +87,34 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
                     super.onReady(youTubePlayer);
                     youTubePlayer.cueVideo(video.getKey(), 0f);
                     DefaultPlayerUiController defaultPlayerUiController = new DefaultPlayerUiController(holder.binding.youTubePlayerView, youTubePlayer);
+                    defaultPlayerUiController.setFullScreenButtonClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String k = video.getKey();
+                            Intent intent = new Intent(holder.binding.getRoot().getContext(), MainActivity2.class);
+                            if (k != null && k.length() > 0) {
+                                intent.putExtra("key", k);
+                            }
+
+                            holder.binding.getRoot().getContext().startActivity(intent);
+                        }
+                    });
                     holder.binding.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.getRootView());
                 }
             }, options);
+
+
+//            holder.binding.youTubePlayerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+//                @Override
+//                public void onYouTubePlayerEnterFullScreen() {
+//                    holder.binding.youTubePlayerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//                }
+//
+//                @Override
+//                public void onYouTubePlayerExitFullScreen() {
+//
+//                }
+//            });
         } catch (Exception e) {
         }
         holder.binding.tvTitleTrailer.setText(video.getName());

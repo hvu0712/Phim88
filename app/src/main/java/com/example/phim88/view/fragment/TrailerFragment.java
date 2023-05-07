@@ -71,7 +71,7 @@ public class TrailerFragment extends BaseFragment {
                     Log.e(TAG, "xech: " + video.getName());
                     if (video.getName().equals("Official Trailer")) {
                         a = video.getKey();
-                        Log.e(TAG, "sech: " + a);
+                        Log.e(TAG, "sech: " + a + video.getKey());
                     } else {
                         a = video.getKey();
                     }

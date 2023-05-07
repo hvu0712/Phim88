@@ -58,7 +58,7 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
                 break;
 
             case 1:
-                tittle = "Cats";
+                tittle = "Cast";
                 break;
 
             case 2:

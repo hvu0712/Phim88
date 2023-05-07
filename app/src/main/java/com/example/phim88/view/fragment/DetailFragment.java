@@ -117,10 +117,10 @@ public class DetailFragment extends BaseFragment {
 
     public void fetchDetail() {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        detailViewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
+//        detailViewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
         if (id != 0) {
 //            sharedViewModel.setData(id);
-//            detailViewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
+            detailViewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
             detailViewModel.RequestListDetail(id);
             String backdrop = getArguments().getString("backdrop");
             String img = getArguments().getString("img");
@@ -149,10 +149,10 @@ public class DetailFragment extends BaseFragment {
             binding.tvLike.setText(Math.round(voteCount) + "%");
             binding.tvMovieName.setText(title);
 
-            Log.e(TAG, "fetchDetail: " + title + genres);
+            Log.e(TAG, "fetchDetail: " + title + genres+id);
         } else if (mId != 0) {
             sharedViewModel.setData(mId);
-//            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+            detailViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
             detailViewModel.RequestListDetail(mId);
             detailViewModel.getLiveData().observe(getViewLifecycleOwner(), detail -> {
                 String backdrop = detail.getBackdropPath();
